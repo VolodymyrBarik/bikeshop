@@ -54,4 +54,5 @@ public class Order {
 
     @Column(nullable = false)
     private boolean isDeleted = false;
+    private boolean isCalculated = false;
 }
