@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -27,11 +30,13 @@ public class Product {
     private String description;
     private BigDecimal price;
     private BigDecimal wholesalePrice;
-    @OneToOne
+    @ManyToOne
     private Currency currency;
+    @ManyToOne
     private Brand brand;
+    @ManyToMany
     private Set<Category> categories;
-    private Set<String> images;
+    private String images;
     private boolean isDeleted = false;
     private boolean enabled = false;
 }

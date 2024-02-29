@@ -1,5 +1,6 @@
 package org.bikeshop.model;
 
+import jakarta.validation.constraints.Min;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,6 +27,7 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
     @Column(nullable = false)
+    @Min(0)
     private int quantity;
     @Column(nullable = false)
     private boolean isDeleted = false;

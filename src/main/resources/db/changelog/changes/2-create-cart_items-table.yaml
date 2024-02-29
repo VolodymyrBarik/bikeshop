@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create_brand_table
+      id: create_cart_item_table
       author: Volodymyr_Barasiuk
       changes:
         - createTable:
-            tableName: brands
+            tableName: cart_items
             columns:
               - column:
                   name: id
@@ -14,22 +14,22 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: name
-                  type: varchar(255)
+                  name: shopping_cart_id
+                  type: bigint
                   constraints:
-                    unique: true
                     nullable: false
               - column:
-                  name: description
-                  type: varchar(255)
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
               - column:
-                  name: logo
-                  type: varchar(255)
+                  name: quantity
+                  type: integer
+                  constraints:
+                    nullable: false
+                    checkConstraint: "quantity >= 0"
               - column:
                   name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
-              - column:
-                  name: is_enabled
                   type: boolean
                   defaultValueBoolean: false
