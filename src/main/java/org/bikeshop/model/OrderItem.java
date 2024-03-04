@@ -1,5 +1,6 @@
 package org.bikeshop.model;
 
+import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,9 +37,9 @@ public class OrderItem {
     private int quantity;
 
     @Column(nullable = false)
+    @Min(0)
     private BigDecimal price;
 
     @Column(nullable = false)
     private boolean isDeleted = false;
-
 }

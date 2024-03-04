@@ -2,12 +2,12 @@ package org.bikeshop.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,13 +32,12 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public enum Status {
-        NEW, ACCEPTED, WAITING_FOR_PAYMENT, ASSEMBLING, SENT, DELIVERED, CLOSED, DELETED
-    }
+    @ManyToOne
+    private Status currentStatus;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Status> orderStatusHistory = new ArrayList<>();
+    //status, timestamp, login
 
     @Column(nullable = false)
     private BigDecimal total;
@@ -49,10 +48,17 @@ public class Order {
     @Column(nullable = false)
     private String shippingAddress;
 
+    private String additionalComment;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems;
 
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    @Column(nullable = false)
     private boolean isCalculated = false;
+
+    @Column(nullable = false)
+    private boolean areGoodsWrittenOff = false;
 }

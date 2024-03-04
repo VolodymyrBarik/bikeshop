@@ -9,8 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +26,11 @@ public class Product {
     private int quantity;
     private String title;
     private String description;
-    private BigDecimal price;
+    @Min(value = 0, message = "Product currency price can't be less than 0")
+    private BigDecimal priceInCurrency;
+    @Min(value = 0, message = "Product price in hryvna can't be less than 0")
+    private BigDecimal priceUAH;
+    @Min(value = 0, message = "Product wholesale price in hryvna can't be less than 0")
     private BigDecimal wholesalePrice;
     @ManyToOne
     private Currency currency;

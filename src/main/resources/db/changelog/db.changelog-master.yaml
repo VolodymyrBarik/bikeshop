@@ -3,3 +3,11 @@ databaseChangeLog:
       file: db/changelog/changes/1-create-brands-table.yaml
   - include:
       file: db/changelog/changes/2-create-cart_items-table.yaml
+  - include:
+      file: db/changelog/changes/3-create-categories-table.yaml
+  - include:
+      file: db/changelog/changes/4-create-currencies-table.yaml
+  - include:
+      file: db/changelog/changes/5-create-order-items-table.yaml
+  - include:
+      file: db/changelog/changes/6-create-orders-table.yaml

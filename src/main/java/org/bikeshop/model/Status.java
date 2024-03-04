@@ -12,14 +12,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "categories")
-public class Category {
+@Table(name = "statuses")
+public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String name;
-    private String description;
+    private boolean isActive = false;
     private boolean isDeleted = false;
-    private boolean isEnabled = false;
 }
