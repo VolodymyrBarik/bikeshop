@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_statuses_table
+      author: Volodymyr_Barasiuk
+      changes:
+        - createTable:
+            tableName: statuses
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: false

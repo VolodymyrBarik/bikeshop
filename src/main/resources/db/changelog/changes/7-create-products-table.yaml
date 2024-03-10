@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_products_table
+      author: Volodymyr_Barasiuk
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_code
+                  type: varchar(255)
+              - column:
+                  name: quantity
+                  type: integer
+                  constraints:
+                    nullable: false
+                    checkConstraint: "quantity >= 0"
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: price_in_currency
+                  type: numeric
+                  constraints:
+                    nullable: false
+              - column:
+                  name: priceuah
+                  type: numeric
+                  constraints:
+                    nullable: false
+              - column:
+                  name: wholesale_price
+                  type: numeric
+                  constraints:
+                    nullable: false
+              - column:
+                  name: wholesale_additional_discount_in_percent
+                  type: integer
+                  defaultValue: "0"
+              - column:
+                  name: retail_discount_in_percent
+                  type: integer
+                  defaultValue: "0"
+              - column:
+                  name: currency_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: brand_id
+                  type: bigint
+              - column:
+                  name: images
+                  type: varchar(255)
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false

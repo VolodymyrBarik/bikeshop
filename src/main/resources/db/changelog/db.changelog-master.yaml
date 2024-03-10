@@ -11,3 +11,19 @@ databaseChangeLog:
       file: db/changelog/changes/5-create-order-items-table.yaml
   - include:
       file: db/changelog/changes/6-create-orders-table.yaml
+  - include:
+      file: db/changelog/changes/7-create-products-table.yaml
+  - include:
+      file: db/changelog/changes/8-create-roles-table.yaml
+  - include:
+      file: db/changelog/changes/9-add-roles-to-roles-table.yaml
+  - include:
+      file: db/changelog/changes/10-create-statuses-table.yaml
+  - include:
+      file: db/changelog/changes/11-create-users-table.yaml
+  - include:
+      file: db/changelog/changes/12-create-order-statuses-history-table.yaml
+  - include:
+      file: db/changelog/changes/13-create-products-categories-table.yaml
+  - include:
+      file: db/changelog/changes/14-create-shopping-carts-table.yaml

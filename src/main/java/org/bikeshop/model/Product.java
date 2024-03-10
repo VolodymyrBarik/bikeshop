@@ -22,16 +22,23 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productCode;
+
     @Min(value = 0, message = "Product quantity can't be less than 0")
     private int quantity;
     private String title;
     private String description;
+
     @Min(value = 0, message = "Product currency price can't be less than 0")
     private BigDecimal priceInCurrency;
+
     @Min(value = 0, message = "Product price in hryvna can't be less than 0")
     private BigDecimal priceUAH;
+
     @Min(value = 0, message = "Product wholesale price in hryvna can't be less than 0")
     private BigDecimal wholesalePrice;
+
+    private int wholesaleAdditionalDiscountInPercent = 0;
+    private int retailDiscountInPercent = 0;
     @ManyToOne
     private Currency currency;
     @ManyToOne

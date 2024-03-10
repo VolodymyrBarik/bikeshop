@@ -2,7 +2,6 @@ package org.bikeshop.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import jakarta.persistence.CascadeType;
@@ -35,9 +34,8 @@ public class Order {
     @ManyToOne
     private Status currentStatus;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Status> orderStatusHistory = new ArrayList<>();
-    //status, timestamp, login
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderStatusHistory> orderStatusHistory;
 
     @Column(nullable = false)
     private BigDecimal total;

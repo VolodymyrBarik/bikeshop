@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_products_categories_table
+      author: Volodymyr_Barasiuk
+      changes:
+        - createTable:
+            tableName: products_categories
+            columns:
+              - column:
+                  name: product_id
+                  type: bigint
+              - column:
+                  name: categories_id
+                  type: bigint
