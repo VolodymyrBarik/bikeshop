@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "categories")
+@SQLDelete(sql = "UPDATE categories SET is_deleted=true WHERE id=?")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
