@@ -2,14 +2,18 @@ package org.bikeshop.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.bikeshop.dto.request.BrandRequestDto;
+import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.model.Brand;
 
 public interface BrandService {
-    void save(Brand brand);
+    BrandResponseDto save(BrandRequestDto requestDto);
 
     Optional<Brand> findById(Long id);
 
-    List<Brand> findAll();
+    List<BrandResponseDto> findAll();
 
-    void update(Long id, Brand brand);
+    BrandResponseDto update(Long id, Brand brand);
+
+    void deleteById(Long id);
 }

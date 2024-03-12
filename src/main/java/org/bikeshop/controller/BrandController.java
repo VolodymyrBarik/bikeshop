@@ -3,6 +3,8 @@ package org.bikeshop.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.bikeshop.dto.request.BrandRequestDto;
+import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.model.Brand;
 import org.bikeshop.service.BrandService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ public class BrandController {
     //@PreAuthorize("isAuthenticated() and principal.enabled")
     @Operation(summary = "Get all brands", description = "Get a list of all available brands")
     @GetMapping
-    public List<Brand> getAll() {
+    public List<BrandResponseDto> getAll() {
         return brandService.findAll();
     }
 
@@ -43,18 +45,19 @@ public class BrandController {
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Create a new brand", description = "Create a new brand")
     @PostMapping
-    public void create(@RequestBody @Valid Brand brand) {
-        brandService.save(brand);
+    public void create(@RequestBody @Valid BrandRequestDto requestDto) {
+        brandService.save(requestDto);
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @Operation(summary = "Update a book", description = "Updates a book by it's id")
-//    @ResponseStatus(HttpStatus.OK)
-//    @PutMapping("/{id}")
-//    public void update(@PathVariable Long id,
-//                       @RequestBody @Valid CreateBookRequestDto dto) {
-//        bookService.update(id, dto);
-//    }
+    //    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Update a brand", description = "Updates a brand by it's id")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id,
+                       @RequestBody
+                       @Valid Brand brand) {
+        brandService.update(id, brand);
+    }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
 //    @Operation(summary = "Delete a book", description = "Deletes a book by it's id")
