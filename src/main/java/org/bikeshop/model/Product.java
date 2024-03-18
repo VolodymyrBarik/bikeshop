@@ -1,8 +1,5 @@
 package org.bikeshop.model;
 
-import jakarta.validation.constraints.Min;
-import java.math.BigDecimal;
-import java.util.Set;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,12 +7,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.ParamDef;
-import org.hibernate.annotations.SQLDelete;
+import jakarta.validation.constraints.Min;
+import java.math.BigDecimal;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
@@ -37,10 +34,13 @@ public class Product {
     private BigDecimal priceInCurrency;
 
     @Min(value = 0, message = "Product price in hryvna can't be less than 0")
-    private BigDecimal priceUAH;
+    private BigDecimal priceUah;
 
     @Min(value = 0, message = "Product wholesale price in hryvna can't be less than 0")
     private BigDecimal wholesalePrice;
+
+    @Min(value = 0, message = "Product selfcost price in hryvna can't be less than 0")
+    private BigDecimal selfCost;
 
     private int wholesaleAdditionalDiscountInPercent = 0;
     private int retailDiscountInPercent = 0;

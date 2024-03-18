@@ -3,15 +3,12 @@ package org.bikeshop.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.BrandRequestDto;
 import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.model.Brand;
 import org.bikeshop.service.BrandService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +33,8 @@ public class BrandController {
 
     @Operation(summary = "Get a brand", description = "Returns a brand by it's id")
     @GetMapping("/{id}")
-    public Brand getBookById(@PathVariable Long id) {
-        return brandService.findById(id).get();
+    public BrandResponseDto getBookById(@PathVariable Long id) {
+        return brandService.getById(id);
     }
 
     //update like in bookService
@@ -59,18 +56,16 @@ public class BrandController {
         brandService.update(id, brand);
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @Operation(summary = "Delete a book", description = "Deletes a book by it's id")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @DeleteMapping("/{id}")
-//    public void delete(@PathVariable Long id) {
-//        bookService.delete(id);
-//    }
+    //    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //    @Operation(summary = "Delete a book", description = "Deletes a book by it's id")
+    //    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //    @DeleteMapping("/{id}")
+    //    public void delete(@PathVariable Long id) {
+    //        bookService.delete(id);
+    //    }
 
-//    @Operation(summary = "Search a book", description = "Search a book by title and author")
-//    @GetMapping("/search")
-//    public List<BookDto> search(BookSearchParameters searchParameters, Pageable pageable) {
-//        return bookService.search(searchParameters, pageable);
-//    }
-
+    //    @Operation(summary = "Search a book", description = "Search a book by title and author")
+    //    @GetMapping("/search")
+    //    public List<BookDto> search(BookSearchParameters searchParameters, Pageable pageable) {
+    //    return bookService.search(searchParameters, pageable);
 }

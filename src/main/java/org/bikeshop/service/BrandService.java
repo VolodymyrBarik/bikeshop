@@ -1,7 +1,6 @@
 package org.bikeshop.service;
 
 import java.util.List;
-import java.util.Optional;
 import org.bikeshop.dto.request.BrandRequestDto;
 import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.model.Brand;
@@ -9,7 +8,7 @@ import org.bikeshop.model.Brand;
 public interface BrandService {
     BrandResponseDto save(BrandRequestDto requestDto);
 
-    Optional<Brand> findById(Long id);
+    BrandResponseDto getById(Long id);
 
     List<BrandResponseDto> findAll();
 

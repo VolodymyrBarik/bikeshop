@@ -1,15 +1,13 @@
 package org.bikeshop.service;
 
-import java.util.List;
-import java.util.Optional;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.BrandRequestDto;
 import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.mapper.BrandMapper;
 import org.bikeshop.model.Brand;
 import org.bikeshop.repository.BrandRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,11 +18,11 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public BrandResponseDto save(BrandRequestDto requestDto) {
-        List<String>brandNamesFromDb = findAll().stream()
+        List<String> brandNamesFromDb = findAll().stream()
                 .map(BrandResponseDto::getName)
                 .toList();
         if (brandNamesFromDb.contains(requestDto.getName())) {
-            throw new EntityNotUniqueException("Brand name should be unique, brand "
+            throw new EntityNotFoundException("Brand name should be unique, brand "
                     + requestDto.getName() + " already exist");
         }
         Brand brand = mapper.toModel(requestDto);
@@ -33,24 +31,29 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Optional<Brand> findById(Long id) {
-        return brandRepository.findById(id);
+    public BrandResponseDto getById(Long id) {
+        Brand brand = brandRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find category by id " + id));
+        return mapper.toDto(brand);
     }
 
     @Override
     public List<BrandResponseDto> findAll() {
-        return brandRepository.findAll();
+        List<Brand> allFromDb = brandRepository.findAll();
+        return allFromDb.stream().map(mapper::toDto)
+                .toList();
     }
 
     @Override
-    public void update(Long id, Brand brand) {
+    public BrandResponseDto update(Long id, Brand brand) {
         Brand brandFromDb =
                 brandRepository.findById(id).orElseThrow(
                         () -> new EntityNotFoundException("Can't find brand by id" + id));
         brandFromDb.setName(brand.getName());
         brandFromDb.setDescription(brand.getDescription());
         brandFromDb.setDescription(brand.getDescription());
-        brandRepository.save(brandFromDb);
+        Brand savedBrand = brandRepository.save(brandFromDb);
+        return mapper.toDto(savedBrand);
     }
 
     @Override

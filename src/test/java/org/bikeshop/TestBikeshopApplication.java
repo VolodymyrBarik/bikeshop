@@ -17,7 +17,8 @@ public class TestBikeshopApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.from(BikeshopApplication::main).with(TestBikeshopApplication.class).run(args);
+        SpringApplication.from(BikeshopApplication::main).with(
+                TestBikeshopApplication.class).run(args);
     }
 
 }

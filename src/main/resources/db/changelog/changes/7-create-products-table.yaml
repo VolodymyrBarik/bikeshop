@@ -35,16 +35,25 @@ databaseChangeLog:
                   type: numeric
                   constraints:
                     nullable: false
+                    checkConstraint: "price_in_currency >= 0"
               - column:
-                  name: priceuah
+                  name: price_uah
                   type: numeric
                   constraints:
                     nullable: false
+                    checkConstraint: "priceuah >= 0"
               - column:
                   name: wholesale_price
                   type: numeric
                   constraints:
                     nullable: false
+                    checkConstraint: "wholesale_price >= 0"
+              - column:
+                  name: self_cost
+                  type: numeric
+                  constraints:
+                    nullable: false
+                    checkConstraint: "self_cost >= 0"
               - column:
                   name: wholesale_additional_discount_in_percent
                   type: integer
