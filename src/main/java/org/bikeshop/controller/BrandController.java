@@ -64,6 +64,8 @@ public class BrandController {
     //        bookService.delete(id);
     //    }
 
+    // Get all products of the brand with categories.
+
     //    @Operation(summary = "Search a book", description = "Search a book by title and author")
     //    @GetMapping("/search")
     //    public List<BookDto> search(BookSearchParameters searchParameters, Pageable pageable) {
