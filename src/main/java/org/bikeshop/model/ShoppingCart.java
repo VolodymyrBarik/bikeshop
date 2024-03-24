@@ -24,7 +24,7 @@ public class ShoppingCart {
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private WholesaleUser user;
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
     private Set<CartItem> cartItems;
 }

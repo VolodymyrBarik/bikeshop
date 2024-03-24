@@ -20,7 +20,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/10-create-statuses-table.yaml
   - include:
-      file: db/changelog/changes/11-create-users-table.yaml
+      file: db/changelog/changes/11-create-wholesale_users-table.yaml
   - include:
       file: db/changelog/changes/12-create-order-statuses-history-table.yaml
   - include:
