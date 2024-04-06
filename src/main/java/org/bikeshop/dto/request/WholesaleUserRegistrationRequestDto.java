@@ -19,6 +19,8 @@ public class WholesaleUserRegistrationRequestDto {
     @Size(min = 8)
     private String repeatPassword;
     @NotBlank
+    private String companyName;
+    @NotBlank
     private String firstName;
     @NotBlank
     private String lastName;

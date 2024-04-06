@@ -1,4 +1,4 @@
-package org.bikeshop.service;
+package org.bikeshop.service.impls;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.mapper.BrandMapper;
 import org.bikeshop.model.Brand;
 import org.bikeshop.repository.BrandRepository;
+import org.bikeshop.service.BrandService;
 import org.springframework.stereotype.Service;
 
 @Service

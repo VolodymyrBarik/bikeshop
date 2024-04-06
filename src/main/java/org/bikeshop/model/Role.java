@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "roles")
 public class Role {
     public enum RoleName {
-        ADMIN, WHOLESALE_CUSTOMER, RETAIL_CUSTOMER, MECHANIC
+        ADMIN, WHOLESALE_USER, RETAIL_USER, MECHANIC
     }
 
     @Id
