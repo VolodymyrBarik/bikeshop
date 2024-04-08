@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface WholesaleUserRepository extends JpaRepository<WholesaleUser, Long> {
-    @Query("from WholesaleUser wu inner join fetch wu.role where wu.email =:email and wu.role=: WHOLESALE_USER")
+    @Query("from WholesaleUser wu inner join fetch wu.role where wu.email =:email")
     Optional<WholesaleUser> findByEmail(String email);
 
 }

@@ -1,7 +1,5 @@
 package org.bikeshop.security;
 
-import java.util.HashSet;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.WholesaleUserLoginRequestDto;
 import org.bikeshop.dto.request.WholesaleUserRegistrationRequestDto;
@@ -10,7 +8,6 @@ import org.bikeshop.dto.response.WholesaleUserResponseDto;
 import org.bikeshop.exception.RegistrationException;
 import org.bikeshop.mapper.WholesaleUserMapper;
 import org.bikeshop.model.Role;
-import org.bikeshop.model.ShoppingCart;
 import org.bikeshop.model.WholesaleUser;
 import org.bikeshop.repository.WholesaleUserRepository;
 import org.bikeshop.service.RoleService;
@@ -55,6 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         wholesaleUser.setFirstName(requestDto.getFirstName());
         wholesaleUser.setLastName(requestDto.getLastName());
         wholesaleUser.setShippingAddress(requestDto.getShippingAddress());
+        wholesaleUser.setCompanyName(requestDto.getCompanyName());
         WholesaleUser wholesaleUserFromDb = wholesaleUserRepository.save(wholesaleUser);
         shoppingCartSupplier.createShoppingCart(wholesaleUserFromDb);
         return wholesaleUserMapper.toDto(wholesaleUserFromDb);

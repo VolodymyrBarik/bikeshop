@@ -40,8 +40,10 @@ public class WholesaleUser implements UserDetails {
     private String lastName;
 
     private String shippingAddress;
+
     @ManyToOne
     private Role role;
+
     private boolean isDeleted;
 
     @Override

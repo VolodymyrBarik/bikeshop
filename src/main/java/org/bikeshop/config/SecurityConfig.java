@@ -1,7 +1,7 @@
 package org.bikeshop.config;
 
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.security.JwtAuthenticationFIlter;
+import org.bikeshop.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +22,7 @@ import org.springframework.web.cors.CorsConfiguration;
 @Configuration
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
-    private final JwtAuthenticationFIlter jwtAuthenticationFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

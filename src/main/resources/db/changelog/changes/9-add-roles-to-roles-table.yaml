@@ -14,13 +14,13 @@ databaseChangeLog:
             columns:
               - column:
                   name: role_name
-                  value: WHOLESALE_CUSTOMER
+                  value: WHOLESALE_USER
         - insert:
             tableName: roles
             columns:
               - column:
                   name: role_name
-                  value: RETAIL_CUSTOMER
+                  value: RETAIL_USER
         - insert:
             tableName: roles
             columns:
