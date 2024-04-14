@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
-    private final CurrencyService currencyService;
-    private final CategoryService categoryService;
+//    private final CurrencyService currencyService;
+//    private final CategoryService categoryService;
     private final BrandService brandService;
 
     @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")

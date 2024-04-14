@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.bikeshop.model.Brand;
 import org.bikeshop.model.Category;
 import org.bikeshop.model.Currency;
+import org.bikeshop.model.ProductImages;
 import org.hibernate.validator.constraints.UniqueElements;
 
 @Getter
@@ -32,7 +33,7 @@ public class CreateProductRequestDto {
     private Brand brand;
     @NotEmpty
     private Category category;
-    private String images;
+    private Set<ProductImages> images;
     private boolean isDeleted = false;
     private boolean enabled = false;
 }
