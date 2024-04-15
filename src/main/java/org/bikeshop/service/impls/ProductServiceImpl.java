@@ -1,7 +1,6 @@
 package org.bikeshop.service.impls;
 
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
@@ -9,9 +8,11 @@ import org.bikeshop.dto.response.ProductResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.mapper.ProductMapper;
 import org.bikeshop.model.Product;
-import org.bikeshop.repository.ProductRepository;
+import org.bikeshop.repository.product.ProductRepository;
+import org.bikeshop.repository.product.ProductSpecificationBuilder;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper;
     private final ProductRepository productRepository;
+    private final ProductSpecificationBuilder productSpecificationBuilder;
 
     @Override
     public ProductResponseDto save(CreateProductRequestDto requestDto) {
@@ -54,22 +56,26 @@ public class ProductServiceImpl implements ProductService {
         productFromDb.setPriceInCurrency(dto.getPriceInCurrency());
         productFromDb.setCurrency(dto.getCurrency());
         productFromDb.setSelfCost(dto.getSelfCost());
-        productFromDb.setBrand(dto.getBrand());
         productFromDb.setCategory(dto.getCategory());
-
-
-
+        productFromDb.setImages(dto.getImages());
+        productRepository.save(productFromDb);
     }
 
     @Override
     public void delete(Long id) {
-
+        productRepository.deleteById(id);
     }
 
     @Override
     public List<ProductResponseDto> search(ProductSearchParameters searchParameters,
                                            Pageable pageable) {
-        return List.of();
+
+        Specification<Product> prductSpecification
+                = productSpecificationBuilder.build(searchParameters);
+        return productRepository.findAll(prductSpecification, pageable).stream()
+                .map(b -> productRepository.findByIdWithCategories(b.getId()).orElse(new Product()))
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Override
