@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.dto.request.BrandRequestDto;
+import org.bikeshop.dto.request.CreateBrandRequestDto;
 import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.model.Brand;
 import org.bikeshop.service.BrandService;
@@ -42,7 +42,7 @@ public class BrandController {
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Create a new brand", description = "Create a new brand")
     @PostMapping
-    public void create(@RequestBody @Valid BrandRequestDto requestDto) {
+    public void create(@RequestBody @Valid CreateBrandRequestDto requestDto) {
         brandService.save(requestDto);
     }
 

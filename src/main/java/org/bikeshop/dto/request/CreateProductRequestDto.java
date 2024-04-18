@@ -15,24 +15,22 @@ import org.hibernate.validator.constraints.UniqueElements;
 @Setter
 public class CreateProductRequestDto {
     @NotEmpty
-    @UniqueElements
     private String productCode;
     @NotEmpty
     private String title;
     private String description;
     private int quantity;
     private BigDecimal priceInCurrency;
-    private BigDecimal priceUah;
     private BigDecimal wholesalePrice;
     private BigDecimal selfCost;
     private int wholesaleAdditionalDiscountInPercent = 0;
     private int retailDiscountInPercent = 0;
     @NotEmpty
-    private Currency currency;
+    private Long currencyId;
     @NotEmpty
-    private Brand brand;
+    private Long brandId;
     @NotEmpty
-    private Category category;
+    private Long categoryId;
     private Set<ProductImages> images;
     private boolean isDeleted = false;
     private boolean enabled = false;

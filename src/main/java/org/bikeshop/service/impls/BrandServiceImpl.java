@@ -3,7 +3,7 @@ package org.bikeshop.service.impls;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.dto.request.BrandRequestDto;
+import org.bikeshop.dto.request.CreateBrandRequestDto;
 import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.mapper.BrandMapper;
 import org.bikeshop.model.Brand;
@@ -18,7 +18,7 @@ public class BrandServiceImpl implements BrandService {
     private final BrandMapper mapper;
 
     @Override
-    public BrandResponseDto save(BrandRequestDto requestDto) {
+    public BrandResponseDto save(CreateBrandRequestDto requestDto) {
         List<String> brandNamesFromDb = findAll().stream()
                 .map(BrandResponseDto::getName)
                 .toList();

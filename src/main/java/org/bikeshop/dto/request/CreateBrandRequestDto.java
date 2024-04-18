@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BrandRequestDto {
+public class CreateBrandRequestDto {
     @NotEmpty
     private String name;
     private String description;

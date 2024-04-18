@@ -9,8 +9,8 @@ import org.bikeshop.dto.response.ProductResponseDto;
 import org.bikeshop.service.BrandService;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
-
+//import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class ProductController {
 //    private final CategoryService categoryService;
     private final BrandService brandService;
 
-    @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
+    //@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
     @Operation(summary = "Create a new product", description = "Create a new product")
     @PostMapping
     public ProductResponseDto create(@RequestBody @Valid CreateProductRequestDto requestDto) {
@@ -33,9 +33,9 @@ public class ProductController {
     }
 
 
-//    @Operation(summary = "Get all products", description = "Get a list of all available products")
-//    @GetMapping
-//    public List<ProductResponseDto> getAll(Pageable pageable) {
-//        return productService.findAll(pageable);
-//    }
+    @Operation(summary = "Get all products", description = "Get a list of all available products")
+    @GetMapping
+    public List<ProductResponseDto> getAll(Pageable pageable) {
+        return productService.findAll(pageable);
+    }
 }

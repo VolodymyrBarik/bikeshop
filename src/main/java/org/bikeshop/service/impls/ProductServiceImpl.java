@@ -10,6 +10,9 @@ import org.bikeshop.mapper.ProductMapper;
 import org.bikeshop.model.Product;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.repository.product.ProductSpecificationBuilder;
+import org.bikeshop.service.BrandService;
+import org.bikeshop.service.CategoryService;
+import org.bikeshop.service.CurrencyService;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,6 +24,10 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper;
     private final ProductRepository productRepository;
     private final ProductSpecificationBuilder productSpecificationBuilder;
+    private final CurrencyService currencyService;
+    private final BrandService brandService;
+    private final CategoryService categoryService;
+
 
     @Override
     public ProductResponseDto save(CreateProductRequestDto requestDto) {
@@ -70,10 +77,10 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponseDto> search(ProductSearchParameters searchParameters,
                                            Pageable pageable) {
 
-        Specification<Product> prductSpecification
+        Specification<Product> productSpecification
                 = productSpecificationBuilder.build(searchParameters);
-        return productRepository.findAll(prductSpecification, pageable).stream()
-                .map(b -> productRepository.findByIdWithCategories(b.getId()).orElse(new Product()))
+        return productRepository.findAll(productSpecification, pageable).stream()
+                .map(p -> productRepository.findById(p.getId()).orElse(new Product()))
                 .map(mapper::toDto)
                 .toList();
     }
