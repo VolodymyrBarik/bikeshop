@@ -8,4 +8,5 @@ import lombok.Setter;
 public class CreateCategoryRequestDto {
     private String name;
     private String description;
+    private String logo;
 }

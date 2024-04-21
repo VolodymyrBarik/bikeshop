@@ -1,6 +1,7 @@
 package org.bikeshop.exception;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         body.put("status", HttpStatus.NOT_FOUND);
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
@@ -57,7 +58,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Object> handleRegistrationException(RegistrationException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        body.put("status", HttpStatus.CONFLICT);
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         body.put("status", HttpStatus.CONFLICT);
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);

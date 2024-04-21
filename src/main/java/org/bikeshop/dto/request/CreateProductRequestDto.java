@@ -5,11 +5,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
-import org.bikeshop.model.Brand;
-import org.bikeshop.model.Category;
-import org.bikeshop.model.Currency;
 import org.bikeshop.model.ProductImages;
-import org.hibernate.validator.constraints.UniqueElements;
 
 @Getter
 @Setter
@@ -25,11 +21,11 @@ public class CreateProductRequestDto {
     private BigDecimal selfCost;
     private int wholesaleAdditionalDiscountInPercent = 0;
     private int retailDiscountInPercent = 0;
-    @NotEmpty
+    //@NotEmpty
     private Long currencyId;
-    @NotEmpty
+    //@NotEmpty
     private Long brandId;
-    @NotEmpty
+    //@NotEmpty
     private Long categoryId;
     private Set<ProductImages> images;
     private boolean isDeleted = false;
