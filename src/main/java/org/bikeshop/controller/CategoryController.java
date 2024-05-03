@@ -35,7 +35,7 @@ public class CategoryController {
     @Operation(summary = "Get all enabled, non deleted categories", description = "Get a list of all enabled, non deleted categories")
     @GetMapping
     public List<CategoryResponseDto> getAllEnabledNonDeleted() {
-        return categoryService.findAllEnabledNonDisabled();
+        return categoryService.findAllEnabledNonDeleted();
     }
 
     @Operation(summary = "Get all categories", description = "Get a list of all categories including disabled and deleted")

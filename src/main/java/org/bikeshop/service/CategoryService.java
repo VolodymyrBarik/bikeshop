@@ -9,7 +9,7 @@ public interface CategoryService {
 
     CategoryResponseDto findById(Long id);
 
-    List<CategoryResponseDto> findAllEnabledNonDisabled();
+    List<CategoryResponseDto> findAllEnabledNonDeleted();
 
     List<CategoryResponseDto> findAll();
 

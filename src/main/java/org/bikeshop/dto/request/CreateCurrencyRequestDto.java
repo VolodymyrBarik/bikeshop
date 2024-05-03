@@ -1,6 +1,8 @@
 package org.bikeshop.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,6 @@ import lombok.Setter;
 public class CreateCurrencyRequestDto {
     @NotEmpty
     private String name;
-    @NotEmpty
-    private double exchangeRate;
+    @NotNull
+    private BigDecimal exchangeRate;
 }

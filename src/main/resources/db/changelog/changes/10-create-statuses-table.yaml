@@ -20,6 +20,9 @@ databaseChangeLog:
                     unique: true
                     nullable: false
               - column:
+                  name: message
+                  type: varchar(255)
+              - column:
                   name: is_active
                   type: boolean
                   defaultValueBoolean: false

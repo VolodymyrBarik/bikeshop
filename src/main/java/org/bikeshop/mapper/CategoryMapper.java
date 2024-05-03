@@ -6,7 +6,7 @@ import org.bikeshop.dto.response.CategoryResponseDto;
 import org.bikeshop.model.Category;
 import org.mapstruct.Mapper;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(componentModel = "spring", config = MapperConfig.class)
 public interface CategoryMapper {
     CategoryResponseDto toDto(Category category);
 

@@ -6,7 +6,7 @@ import org.bikeshop.dto.response.CurrencyResponseDto;
 import org.bikeshop.model.Currency;
 import org.mapstruct.Mapper;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(componentModel = "spring", config = MapperConfig.class)
 public interface CurrencyMapper {
     CurrencyResponseDto toDto(Currency currency);
 

@@ -3,7 +3,7 @@ package org.bikeshop.service;
 import java.util.List;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
-import org.bikeshop.dto.response.ProductResponseDto;
+import org.bikeshop.dto.response.product.ProductResponseDto;
 import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
@@ -20,5 +20,8 @@ public interface ProductService {
     List<ProductResponseDto> search(ProductSearchParameters searchParameters, Pageable pageable);
 
     List<ProductResponseDto> getAllProductsByCategoryId(Long categoryId);
+
     List<ProductResponseDto> getAllProductsByCategoryIdAndBrands(Long[] categoryId, Long[] brandsIds);
+
+    List<ProductResponseDto> getAllProductsByCurrency(Long currencyId);
 }

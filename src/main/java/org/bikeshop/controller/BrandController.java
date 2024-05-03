@@ -33,7 +33,7 @@ public class BrandController {
     }
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Get all enabled", description = "Get a list of all brands")
+    @Operation(summary = "Get all", description = "Get a list of all brands")
     @GetMapping("/all")
     public List<BrandResponseDto> getAll() {
         return brandService.findAll();
@@ -41,7 +41,7 @@ public class BrandController {
 
     @Operation(summary = "Get a brand", description = "Returns a brand by it's id")
     @GetMapping("/{id}")
-    public BrandResponseDto getBookById(@PathVariable Long id) {
+    public BrandResponseDto getBrandById(@PathVariable Long id) {
         return brandService.findById(id);
     }
 

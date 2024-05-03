@@ -40,11 +40,9 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Currency currency;
 
-    @Setter(AccessLevel.NONE)
     @Min(value = 0, message = "Product price in hryvna can't be less than 0")
     private BigDecimal priceUah;
 
-    @Setter(AccessLevel.NONE)
     @Min(value = 0, message = "Product wholesale price in hryvna can't be less than 0")
     private BigDecimal wholesalePrice;
 
@@ -64,28 +62,4 @@ public class Product {
 
     private boolean isDeleted = false;
     private boolean enabled = false;
-
-    private void updateWholesalePrice() {
-        if (priceUah != null) {
-            this.wholesalePrice = priceUah.multiply(BigDecimal.valueOf(0.68));
-        }
-    }
-
-    private void updatePriceUah() {
-        if (priceInCurrency != null && currency != null) {
-            this.priceUah =
-                    priceInCurrency.multiply(BigDecimal.valueOf(currency.getExchangeRate()));
-        }
-        updateWholesalePrice();
-    }
-
-    public void setPriceInCurrency(BigDecimal priceInCurrency) {
-        this.priceInCurrency = priceInCurrency;
-        updatePriceUah();
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-        updatePriceUah();
-    }
 }

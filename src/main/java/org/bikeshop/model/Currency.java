@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -22,7 +23,7 @@ public class Currency {
     @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
-    private double exchangeRate;
+    private BigDecimal exchangeRate;
     private boolean isDeleted;
     private boolean isEnabled;
 }

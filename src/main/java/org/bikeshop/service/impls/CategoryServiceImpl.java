@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponseDto> findAllEnabledNonDisabled() {
+    public List<CategoryResponseDto> findAllEnabledNonDeleted() {
         return categoryRepository.findAll().stream()
                 .filter(Category::isEnabled)
                 .filter(Predicate.not(Category::isDeleted))

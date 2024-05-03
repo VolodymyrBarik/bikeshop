@@ -1,6 +1,7 @@
 package org.bikeshop.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Getter;
@@ -21,11 +22,11 @@ public class CreateProductRequestDto {
     private BigDecimal selfCost;
     private int wholesaleAdditionalDiscountInPercent = 0;
     private int retailDiscountInPercent = 0;
-    //@NotEmpty
+    @NotNull
     private Long currencyId;
-    //@NotEmpty
+    @NotNull
     private Long brandId;
-    //@NotEmpty
+    @NotNull
     private Long categoryId;
     private Set<ProductImages> images;
     private boolean isDeleted = false;

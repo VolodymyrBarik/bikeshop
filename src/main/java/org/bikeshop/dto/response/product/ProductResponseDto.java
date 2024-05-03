@@ -1,4 +1,4 @@
-package org.bikeshop.dto.response;
+package org.bikeshop.dto.response.product;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -23,9 +23,9 @@ public class ProductResponseDto {
     private BigDecimal selfCost;
     private final int wholesaleAdditionalDiscountInPercent = 0;
     private final int retailDiscountInPercent = 0;
-    private Currency currency;
-    private Brand brand;
-    private Set<Category> categories;
+    private Long currencyId;
+    private Long brandId;
+    private Long categoryId;
     private Set<ProductImages>images;
     private final boolean isDeleted = false;
     private final boolean enabled = false;

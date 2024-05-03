@@ -5,15 +5,19 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.CreateProductRequestDto;
-import org.bikeshop.dto.response.ProductResponseDto;
-import org.bikeshop.service.BrandService;
+import org.bikeshop.dto.response.BrandResponseDto;
+import org.bikeshop.dto.response.product.ProductResponseDto;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,9 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
-//    private final CurrencyService currencyService;
-//    private final CategoryService categoryService;
-    private final BrandService brandService;
 
     //@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
     @Operation(summary = "Create a new product", description = "Create a new product")
@@ -38,4 +39,21 @@ public class ProductController {
     public List<ProductResponseDto> getAll(Pageable pageable) {
         return productService.findAll(pageable);
     }
+
+    @Operation(summary = "Update a product", description = "Updates a product by it's id")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id,
+                       @RequestBody
+                       @Valid CreateProductRequestDto requestDto) {
+        productService.update(id, requestDto);
+    }
+
+    @Operation(summary = "Get a product", description = "Returns a product by it's id")
+    @GetMapping("/{id}")
+    public ProductResponseDto getProductById(@PathVariable Long id) {
+        return productService.findById(id);
+    }
+
+
 }

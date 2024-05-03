@@ -21,6 +21,7 @@ public class Status {
     private Long id;
     @Column(unique = true)
     private String name;
+    private String message;
     private boolean isActive = false;
     private boolean isDeleted = false;
 }

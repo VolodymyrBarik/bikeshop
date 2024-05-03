@@ -21,7 +21,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: exchange_rate
-                  type: double
+                  type: numeric(5, 1)
                   constraints:
                     nullable: false
               - column:
