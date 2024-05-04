@@ -1,8 +1,9 @@
 package org.bikeshop.service;
 
-import org.bikeshop.model.WholesaleUser;
+import org.bikeshop.model.ShoppingCart;
+import org.bikeshop.model.User;
 
 @FunctionalInterface
 public interface ShoppingCartSupplier {
-    void createShoppingCart(WholesaleUser wholesaleUser);
+    ShoppingCart createShoppingCart(User wholesaleUser);
 }

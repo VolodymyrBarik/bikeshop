@@ -2,7 +2,7 @@ package org.bikeshop.service.impls;
 
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.model.ShoppingCart;
-import org.bikeshop.model.WholesaleUser;
+import org.bikeshop.model.User;
 import org.bikeshop.repository.ShoppingCartRepository;
 import org.bikeshop.service.ShoppingCartSupplier;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ public class ShoppingCartSupplierImpl implements ShoppingCartSupplier {
     private final ShoppingCartRepository repository;
 
     @Override
-    public void createShoppingCart(WholesaleUser wholesaleUser) {
+    public ShoppingCart createShoppingCart(User wholesaleUser) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(wholesaleUser);
-        repository.save(shoppingCart);
+        return repository.save(shoppingCart);
     }
 }
