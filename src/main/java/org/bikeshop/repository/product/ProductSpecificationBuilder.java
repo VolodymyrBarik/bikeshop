@@ -15,6 +15,15 @@ public class ProductSpecificationBuilder implements SpecificationBuilder<Product
 
     @Override
     public Specification<Product> build(ProductSearchParameters searchParameters) {
-        return null;
+        Specification<Product> spec = Specification.where(null);
+        if (searchParameters.brands() != null && searchParameters.brands().length > 0) {
+            spec = spec.and(productSpecificationProviderManager.getSpecificationProvider(
+                    "brand").getSpecification(searchParameters.brands()));
+        }
+        if (searchParameters.categories() != null && searchParameters.categories().length > 0) {
+            spec = spec.and(productSpecificationProviderManager.getSpecificationProvider(
+                    "category").getSpecification(searchParameters.categories()));
+        }
+        return spec;
     }
 }

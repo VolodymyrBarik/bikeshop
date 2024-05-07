@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
 import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.dto.response.product.ProductResponseDto;
@@ -11,6 +12,8 @@ import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,10 +52,24 @@ public class ProductController {
         productService.update(id, requestDto);
     }
 
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Delete a product", description = "Deletes a product by it's id")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        productService.delete(id);
+    }
+
     @Operation(summary = "Get a product", description = "Returns a product by it's id")
     @GetMapping("/{id}")
     public ProductResponseDto getProductById(@PathVariable Long id) {
         return productService.findById(id);
+    }
+
+    @Operation(summary = "Search a product", description = "Search a product by brand and category")
+    @GetMapping("/search")
+    public List<ProductResponseDto> search(ProductSearchParameters searchParameters, Pageable pageable) {
+        return productService.search(searchParameters, pageable);
     }
 
 

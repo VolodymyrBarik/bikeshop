@@ -13,9 +13,9 @@ public class ShoppingCartSupplierImpl implements ShoppingCartSupplier {
     private final ShoppingCartRepository repository;
 
     @Override
-    public ShoppingCart createShoppingCart(User wholesaleUser) {
+    public ShoppingCart createShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(wholesaleUser);
+        shoppingCart.setUser(user);
         return repository.save(shoppingCart);
     }
 }

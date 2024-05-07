@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.dto.request.WholesaleUserLoginRequestDto;
-import org.bikeshop.dto.request.WholesaleUserRegistrationRequestDto;
+import org.bikeshop.dto.request.UserLoginRequestDto;
+import org.bikeshop.dto.request.UserRegistrationRequestDto;
 import org.bikeshop.dto.response.UserLoginResponseDto;
 import org.bikeshop.dto.response.UserResponseDto;
 import org.bikeshop.exception.RegistrationException;
@@ -24,14 +24,14 @@ public class AuthenticationController {
 
     @Operation(summary = "Login", description = "Login into the system")
     @PostMapping("/login")
-    public UserLoginResponseDto login(@RequestBody @Valid WholesaleUserLoginRequestDto requestDto) {
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
     }
 
     @Operation(summary = "Register", description = "Register in the system")
     @PostMapping("/register")
     public UserResponseDto register(
-            @RequestBody @Valid WholesaleUserRegistrationRequestDto requestDto)
+            @RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return authenticationService.register(requestDto);
     }

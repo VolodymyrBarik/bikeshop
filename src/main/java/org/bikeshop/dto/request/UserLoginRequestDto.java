@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WholesaleUserLoginRequestDto {
+public class UserLoginRequestDto {
     @NotEmpty
     @Email
     private String email;

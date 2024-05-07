@@ -10,7 +10,7 @@ import org.bikeshop.validation.FieldMatch;
 @Getter
 @Setter
 @FieldMatch
-public class WholesaleUserRegistrationRequestDto {
+public class UserRegistrationRequestDto {
     @NotBlank
     @Email
     private String email;

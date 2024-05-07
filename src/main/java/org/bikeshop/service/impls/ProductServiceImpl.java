@@ -109,7 +109,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponseDto> search(ProductSearchParameters searchParameters,
                                            Pageable pageable) {
-
         Specification<Product> productSpecification
                 = productSpecificationBuilder.build(searchParameters);
         return productRepository.findAll(productSpecification, pageable).stream()

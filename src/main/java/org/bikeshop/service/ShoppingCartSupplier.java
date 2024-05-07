@@ -5,5 +5,5 @@ import org.bikeshop.model.User;
 
 @FunctionalInterface
 public interface ShoppingCartSupplier {
-    ShoppingCart createShoppingCart(User wholesaleUser);
+    ShoppingCart createShoppingCart(User user);
 }

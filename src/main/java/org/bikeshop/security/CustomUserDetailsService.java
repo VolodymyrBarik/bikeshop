@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository wholesaleUserRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return wholesaleUserRepository.findByEmail(email)
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Can't find user by email " + email));
     }

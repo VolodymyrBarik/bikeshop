@@ -27,6 +27,4 @@ public class ProductResponseDto {
     private Long brandId;
     private Long categoryId;
     private Set<ProductImages>images;
-    private final boolean isDeleted = false;
-    private final boolean enabled = false;
 }

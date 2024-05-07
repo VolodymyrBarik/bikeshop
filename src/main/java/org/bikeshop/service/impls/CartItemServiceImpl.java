@@ -28,7 +28,7 @@ public class CartItemServiceImpl implements CartItemService {
             return searchIfCartItemExist(requestDto, user);
         }
         Product productFromDb = productRepository.findById(requestDto.getProductId()).orElseThrow(
-                () -> new EntityNotFoundException("Can't find book with id "
+                () -> new EntityNotFoundException("Can't find product with id "
                         + requestDto.getProductId()));
         CartItem cartItem = searchIfCartItemExist(requestDto, user);
         cartItem.setProduct(productFromDb);

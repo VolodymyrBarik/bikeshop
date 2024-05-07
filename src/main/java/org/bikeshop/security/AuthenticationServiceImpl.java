@@ -1,8 +1,8 @@
 package org.bikeshop.security;
 
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.dto.request.WholesaleUserLoginRequestDto;
-import org.bikeshop.dto.request.WholesaleUserRegistrationRequestDto;
+import org.bikeshop.dto.request.UserLoginRequestDto;
+import org.bikeshop.dto.request.UserRegistrationRequestDto;
 import org.bikeshop.dto.response.UserLoginResponseDto;
 import org.bikeshop.dto.response.UserResponseDto;
 import org.bikeshop.exception.RegistrationException;
@@ -22,8 +22,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper wholesaleUserMapper;
-    private final UserRepository wholesaleUserRepository;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
     private final RoleService roleService;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
@@ -31,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public UserLoginResponseDto authenticate(WholesaleUserLoginRequestDto request) {
+    public UserLoginResponseDto authenticate(UserLoginRequestDto request) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         String token = jwtUtil.generateToken(authentication.getName());
@@ -39,22 +39,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserResponseDto register(WholesaleUserRegistrationRequestDto requestDto)
+    public UserResponseDto register(UserRegistrationRequestDto requestDto)
             throws RegistrationException {
-        if (wholesaleUserRepository.findByEmail(requestDto.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
             throw new RegistrationException("Email is already taken, try another one");
         }
-        User wholesaleUser = new User();
-        wholesaleUser.setEmail(requestDto.getEmail());
-        wholesaleUser.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        User user = new User();
+        user.setEmail(requestDto.getEmail());
+        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         Role wholesaleUserRole = roleService.getByName(Role.RoleName.WHOLESALE_USER.name());
-        wholesaleUser.setRole(wholesaleUserRole);
-        wholesaleUser.setFirstName(requestDto.getFirstName());
-        wholesaleUser.setLastName(requestDto.getLastName());
-        wholesaleUser.setShippingAddress(requestDto.getShippingAddress());
-        wholesaleUser.setCompanyName(requestDto.getCompanyName());
-        User wholesaleUserFromDb = wholesaleUserRepository.save(wholesaleUser);
-        shoppingCartSupplier.createShoppingCart(wholesaleUserFromDb);
-        return wholesaleUserMapper.toDto(wholesaleUserFromDb);
+        user.setRole(wholesaleUserRole);
+        user.setFirstName(requestDto.getFirstName());
+        user.setLastName(requestDto.getLastName());
+        user.setShippingAddress(requestDto.getShippingAddress());
+        user.setCompanyName(requestDto.getCompanyName());
+        User userFromDb = userRepository.save(user);
+        shoppingCartSupplier.createShoppingCart(userFromDb);
+        return userMapper.toDto(userFromDb);
     }
 }
