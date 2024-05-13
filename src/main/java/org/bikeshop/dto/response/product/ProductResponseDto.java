@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
-import org.bikeshop.model.Brand;
-import org.bikeshop.model.Category;
-import org.bikeshop.model.Currency;
 import org.bikeshop.model.ProductImages;
 
 @Getter

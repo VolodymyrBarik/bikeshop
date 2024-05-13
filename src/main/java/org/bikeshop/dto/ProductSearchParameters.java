@@ -1,4 +1,5 @@
 package org.bikeshop.dto;
 
-public record ProductSearchParameters(String[] brands, String[] categories) {
+public record ProductSearchParameters(Long[] brandsIds, Long[] categoriesIds
+) {
 }

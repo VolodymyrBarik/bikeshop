@@ -71,6 +71,4 @@ public class ProductController {
     public List<ProductResponseDto> search(ProductSearchParameters searchParameters, Pageable pageable) {
         return productService.search(searchParameters, pageable);
     }
-
-
 }

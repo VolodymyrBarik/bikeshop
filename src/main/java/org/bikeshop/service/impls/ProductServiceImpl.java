@@ -3,6 +3,7 @@ package org.bikeshop.service.impls;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
@@ -62,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponseDto> findAll(Pageable pageable) {
-        return productRepository.findAllWithImagesBrandCategoryCurrency(pageable)
+        return productRepository.findAll(pageable)
                 .stream()
                 .map(mapper::toDto)
                 .toList();
@@ -107,12 +108,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponseDto> search(ProductSearchParameters searchParameters,
-                                           Pageable pageable) {
-        Specification<Product> productSpecification
-                = productSpecificationBuilder.build(searchParameters);
+    public List<ProductResponseDto> search(
+            ProductSearchParameters searchParameters, Pageable pageable) {
+        Specification<Product> productSpecification =
+                productSpecificationBuilder.build(searchParameters);
+//        return productRepository.findAllWithImagesBrandCategoryCurrency(productSpecification,
+//                        pageable).stream()
+//                //.map(p -> productRepository.findByIdWithImages(p.getId()).orElse(new Product()))
+//                .map(mapper::toDto)
+//                .toList();
         return productRepository.findAll(productSpecification, pageable).stream()
-                .map(p -> productRepository.findById(p.getId()).orElse(new Product()))
                 .map(mapper::toDto)
                 .toList();
     }
