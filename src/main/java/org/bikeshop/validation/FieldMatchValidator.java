@@ -1,6 +1,5 @@
 package org.bikeshop.validation;
 
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.bikeshop.dto.request.UserRegistrationRequestDto;

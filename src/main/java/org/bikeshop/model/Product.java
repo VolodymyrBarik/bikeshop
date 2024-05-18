@@ -48,8 +48,8 @@ public class Product {
     @Min(value = 0, message = "Product self cost price in hryvna can't be less than 0")
     private BigDecimal selfCost;
 
-//    private int wholesaleAdditionalDiscountInPercent = 0;
-//    private int retailDiscountInPercent = 0;
+    //private int wholesaleAdditionalDiscountInPercent = 0;
+    //private int retailDiscountInPercent = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
@@ -59,6 +59,6 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductImages> images;
 
-    private boolean isDeleted = false;
+    private boolean deleted = false;
     private boolean enabled = false;
 }

@@ -6,13 +6,10 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
-import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.dto.response.product.ProductResponseDto;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +32,6 @@ public class ProductController {
     public ProductResponseDto create(@RequestBody @Valid CreateProductRequestDto requestDto) {
         return productService.save(requestDto);
     }
-
 
     @Operation(summary = "Get all products", description = "Get a list of all available products")
     @GetMapping
@@ -68,7 +64,8 @@ public class ProductController {
 
     @Operation(summary = "Search a product", description = "Search a product by brand and category")
     @GetMapping("/search")
-    public List<ProductResponseDto> search(ProductSearchParameters searchParameters, Pageable pageable) {
+    public List<ProductResponseDto> search(ProductSearchParameters searchParameters,
+                                           Pageable pageable) {
         return productService.search(searchParameters, pageable);
     }
 }

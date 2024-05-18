@@ -32,13 +32,15 @@ public class CategoryController {
     }
 
     //@PreAuthorize("isAuthenticated() and principal.enabled")
-    @Operation(summary = "Get all enabled, non deleted categories", description = "Get a list of all enabled, non deleted categories")
+    @Operation(summary = "Get all enabled, non deleted categories",
+            description = "Get a list of all enabled, non deleted categories")
     @GetMapping
     public List<CategoryResponseDto> getAllEnabledNonDeleted() {
         return categoryService.findAllEnabledNonDeleted();
     }
 
-    @Operation(summary = "Get all categories", description = "Get a list of all categories including disabled and deleted")
+    @Operation(summary = "Get all categories",
+            description = "Get a list of all categories including disabled and deleted")
     @GetMapping("/all")
     public List<CategoryResponseDto> getAll() {
         return categoryService.findAll();

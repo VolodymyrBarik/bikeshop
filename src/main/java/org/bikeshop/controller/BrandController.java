@@ -26,7 +26,8 @@ public class BrandController {
     private final BrandService brandService;
 
     //@PreAuthorize("isAuthenticated() and principal.enabled")
-    @Operation(summary = "Get all enabled, non deleted brands", description = "Get a list of all enabled, non deleted brands")
+    @Operation(summary = "Get all enabled, non deleted brands",
+            description = "Get a list of all enabled, non deleted brands")
     @GetMapping
     public List<BrandResponseDto> getAllEnabledNonDeleted() {
         return brandService.findAllEnabledNonDisabled();

@@ -3,13 +3,11 @@ package org.bikeshop.service.impls;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
 import org.bikeshop.dto.response.product.ProductResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
-import org.bikeshop.mapper.BrandMapper;
 import org.bikeshop.mapper.ProductMapper;
 import org.bikeshop.model.Brand;
 import org.bikeshop.model.Category;
@@ -20,9 +18,6 @@ import org.bikeshop.repository.CategoryRepository;
 import org.bikeshop.repository.CurrencyRepository;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.repository.product.ProductSpecificationBuilder;
-import org.bikeshop.service.BrandService;
-import org.bikeshop.service.CategoryService;
-import org.bikeshop.service.CurrencyService;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,12 +32,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductSpecificationBuilder productSpecificationBuilder;
     private final CurrencyRepository currencyRepository;
     private final CategoryRepository categoryRepository;
-    private final CurrencyService currencyService;
-    private final BrandService brandService;
     private final BrandRepository brandRepository;
-    private final CategoryService categoryService;
-    private final BrandMapper brandMapper;
-
 
     @Override
     public ProductResponseDto save(CreateProductRequestDto requestDto) {
@@ -63,16 +53,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponseDto> findAll(Pageable pageable) {
-        return productRepository.findAll(pageable)
-                .stream()
+        return productRepository.findAll(pageable).stream()
+                .filter(p -> !p.isDeleted() && p.isEnabled())
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<ProductResponseDto> findAllWhereQuantityMoreThanZero(Pageable pageable) {
+        return productRepository.findAll(pageable).stream()
+                .filter(p -> !p.isDeleted() && p.isEnabled() && p.getQuantity() > 0)
                 .map(mapper::toDto)
                 .toList();
     }
 
     @Override
     public ProductResponseDto findById(Long id) {
-//        Product productFromDb = productRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Can't find product by id " + id));
         Product productFromDb = productRepository.findByIdWithImages(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find product by id " + id));
         return mapper.toDto(productFromDb);
@@ -112,30 +108,21 @@ public class ProductServiceImpl implements ProductService {
             ProductSearchParameters searchParameters, Pageable pageable) {
         Specification<Product> productSpecification =
                 productSpecificationBuilder.build(searchParameters);
-//        return productRepository.findAllWithImagesBrandCategoryCurrency(productSpecification,
-//                        pageable).stream()
-//                //.map(p -> productRepository.findByIdWithImages(p.getId()).orElse(new Product()))
-//                .map(mapper::toDto)
-//                .toList();
         return productRepository.findAll(productSpecification, pageable).stream()
+                .filter(p -> !p.isDeleted() && p.isEnabled())
                 .map(mapper::toDto)
                 .toList();
     }
 
     @Override
-    public List<ProductResponseDto> getAllProductsByCategoryId(Long categoryId) {
-        return List.of();
-    }
-
-    @Override
-    public List<ProductResponseDto> getAllProductsByCategoryIdAndBrands(Long[] categoryId,
-                                                                        Long[] brandsIds) {
-        return List.of();
-    }
-
-    @Override
-    public List<ProductResponseDto> getAllProductsByCurrency(Long currencyId) {
-        return List.of();
+    public List<ProductResponseDto> searchWhereQuantityMoreThanZero(
+            ProductSearchParameters searchParameters, Pageable pageable) {
+        Specification<Product> productSpecification =
+                productSpecificationBuilder.build(searchParameters);
+        return productRepository.findAll(productSpecification, pageable).stream()
+                .filter(p -> !p.isDeleted() && p.isEnabled() && p.getQuantity() > 0)
+                .map(mapper::toDto)
+                .toList();
     }
 
     private Currency getCurrency(Long id) {

@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 
-
 public interface ProductRepository extends JpaRepository<Product, Long>,
         JpaSpecificationExecutor<Product> {
 
@@ -20,8 +19,13 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
     @NonNull
     Page<Product> findAll(@NonNull Specification<Product> spec, @NonNull Pageable pageable);
 
+    @EntityGraph(attributePaths = {"images"})
+    @Override
+    @NonNull
+    Page<Product> findAll(@NonNull Pageable pageable);
 
-    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.images WHERE p.isDeleted = false AND p.id = :id")
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.images "
+            + "WHERE p.deleted = false AND p.enabled AND p.id = :id")
     Optional<Product> findByIdWithImages(Long id);
 
 }

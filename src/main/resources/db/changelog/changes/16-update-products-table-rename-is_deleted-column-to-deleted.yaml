@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-products-table-rename-is_deleted-column-to-deleted.yaml
+      author: Volodymyr_Barasiuk
+      changes:
+        - renameColumn:
+            tableName: products
+            oldColumnName: is_deleted
+            newColumnName: deleted
+            columnDataType: boolean

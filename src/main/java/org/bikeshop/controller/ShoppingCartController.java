@@ -37,7 +37,8 @@ public class ShoppingCartController {
         return shoppingCartService.get(user);
     }
 
-    @Operation(summary = "Adds product to a shopping cart", description = "Adds product to a shopping cart")
+    @Operation(summary = "Adds product to a shopping cart",
+            description = "Adds product to a shopping cart")
     @PostMapping
     public ShoppingCartResponseDto addProduct(
             @RequestBody CartItemRequestDto requestDto, Authentication authentication) {

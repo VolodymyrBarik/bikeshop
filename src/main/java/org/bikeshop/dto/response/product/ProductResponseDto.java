@@ -23,5 +23,6 @@ public class ProductResponseDto {
     private Long currencyId;
     private Long brandId;
     private Long categoryId;
-    private Set<ProductImages>images;
+    private Set<ProductImages> images;
 }
+

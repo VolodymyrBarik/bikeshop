@@ -20,7 +20,8 @@ public class ProductSpecificationBuilder implements SpecificationBuilder<Product
             spec = spec.and(productSpecificationProviderManager.getSpecificationProvider(
                     "brand").getSpecification(searchParameters.brandsIds()));
         }
-        if (searchParameters.categoriesIds() != null && searchParameters.categoriesIds().length > 0) {
+        if (searchParameters.categoriesIds() != null
+                && searchParameters.categoriesIds().length > 0) {
             spec = spec.and(productSpecificationProviderManager.getSpecificationProvider(
                     "category").getSpecification(searchParameters.categoriesIds()));
         }

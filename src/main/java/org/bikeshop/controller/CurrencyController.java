@@ -31,13 +31,15 @@ public class CurrencyController {
         currencyService.save(requestDto);
     }
 
-    @Operation(summary = "Get all enabled, non deleted currencies", description = "Get a list of all enabled, non deleted currencies")
+    @Operation(summary = "Get all enabled, non deleted currencies",
+            description = "Get a list of all enabled, non deleted currencies")
     @GetMapping
     public List<CurrencyResponseDto> getAllEnabledNonDeleted() {
         return currencyService.findAllEnabledNonDeleted();
     }
 
-    @Operation(summary = "Get all currencies", description = "Get a list of all currencies including disabled and deleted")
+    @Operation(summary = "Get all currencies",
+            description = "Get a list of all currencies including disabled and deleted")
     @GetMapping("/all")
     public List<CurrencyResponseDto> getAll() {
         return currencyService.findAll();
