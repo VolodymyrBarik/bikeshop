@@ -54,15 +54,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponseDto> findAll(Pageable pageable) {
         return productRepository.findAll(pageable).stream()
-                .filter(p -> !p.isDeleted() && p.isEnabled())
-                .map(mapper::toDto)
-                .toList();
-    }
-
-    @Override
-    public List<ProductResponseDto> findAllWhereQuantityMoreThanZero(Pageable pageable) {
-        return productRepository.findAll(pageable).stream()
-                .filter(p -> !p.isDeleted() && p.isEnabled() && p.getQuantity() > 0)
                 .map(mapper::toDto)
                 .toList();
     }
@@ -108,19 +99,7 @@ public class ProductServiceImpl implements ProductService {
             ProductSearchParameters searchParameters, Pageable pageable) {
         Specification<Product> productSpecification =
                 productSpecificationBuilder.build(searchParameters);
-        return productRepository.findAll(productSpecification, pageable).stream()
-                .filter(p -> !p.isDeleted() && p.isEnabled())
-                .map(mapper::toDto)
-                .toList();
-    }
-
-    @Override
-    public List<ProductResponseDto> searchWhereQuantityMoreThanZero(
-            ProductSearchParameters searchParameters, Pageable pageable) {
-        Specification<Product> productSpecification =
-                productSpecificationBuilder.build(searchParameters);
-        return productRepository.findAll(productSpecification, pageable).stream()
-                .filter(p -> !p.isDeleted() && p.isEnabled() && p.getQuantity() > 0)
+        return productRepository.findAllActive(productSpecification, pageable).stream()
                 .map(mapper::toDto)
                 .toList();
     }

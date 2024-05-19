@@ -11,8 +11,6 @@ public interface ProductService {
 
     List<ProductResponseDto> findAll(Pageable pageable);
 
-    List<ProductResponseDto> findAllWhereQuantityMoreThanZero(Pageable pageable);
-
     ProductResponseDto findById(Long id);
 
     void update(Long id, CreateProductRequestDto dto);
@@ -21,7 +19,5 @@ public interface ProductService {
 
     List<ProductResponseDto> search(ProductSearchParameters searchParameters, Pageable pageable);
 
-    List<ProductResponseDto> searchWhereQuantityMoreThanZero(
-            ProductSearchParameters searchParameters, Pageable pageable);
 }
 
