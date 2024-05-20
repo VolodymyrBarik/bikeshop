@@ -2,6 +2,7 @@ package org.bikeshop.service.impls;
 
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.response.ShoppingCartResponseDto;
+import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.mapper.ShoppingCartMapper;
 import org.bikeshop.model.CartItem;
 import org.bikeshop.model.ShoppingCart;
@@ -31,7 +32,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCartResponseDto update(User user, Long cartItemId, int quantity) {
         ShoppingCart shoppingCart = findOrCreateNewShoppingCart(user);
         CartItem cartItem = cartItemRepository
-                .findByIdAndShoppingCartId(cartItemId, shoppingCart.getId()).get();
+                .findByIdAndShoppingCartId(cartItemId, shoppingCart.getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Cart item not found with id " + cartItemId + " for shopping cart "
+                                + shoppingCart.getId()));
         cartItem.setQuantity(quantity);
         cartItemRepository.save(cartItem);
         return shoppingCartMapper.toDto(findOrCreateNewShoppingCart(user));
@@ -41,7 +45,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void deleteCartItemFromShoppingCart(User user, Long cartItemId) {
         ShoppingCart shoppingCart = findOrCreateNewShoppingCart(user);
         CartItem cartItemToBeDeleted = cartItemRepository
-                .findByIdAndShoppingCartId(cartItemId, shoppingCart.getId()).get();
+                .findByIdAndShoppingCartId(cartItemId, shoppingCart.getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Cart item not found with id " + cartItemId + " for shopping cart "
+                                + shoppingCart.getId()));
         cartItemRepository.delete(cartItemToBeDeleted);
     }
 

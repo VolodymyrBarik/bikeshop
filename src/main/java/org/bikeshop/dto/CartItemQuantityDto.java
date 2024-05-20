@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class CartItemQuantityDto {
     @NotEmpty
-    @Min(0)
+    @Min(1)
     private int quantity;
 }

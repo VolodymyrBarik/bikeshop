@@ -2,6 +2,7 @@ package org.bikeshop.repository.product;
 
 import java.util.Optional;
 import org.bikeshop.model.Product;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,6 +22,11 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.images "
             + "WHERE p.deleted = false AND p.enabled AND p.id = :id")
     Optional<Product> findByIdWithImages(Long id);
+
+    @NotNull
+    @Override
+    @Query("SELECT p FROM Product p WHERE p.deleted = false AND p.enabled AND p.id = :id")
+    Optional<Product> findById(@NonNull Long id);
 
     default Page<Product> findAllActive(Specification<Product> spec, Pageable pageable) {
         Specification<Product> activeSpec =

@@ -18,7 +18,7 @@ import org.hibernate.annotations.SQLDelete;
 @Getter
 @Setter
 @Table(name = "cart_items")
-@SQLDelete(sql = "UPDATE cart_items SET is_deleted=true WHERE id=?")
+//@SQLDelete(sql = "UPDATE cart_items SET is_deleted=true WHERE id=?")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +31,6 @@ public class CartItem {
     @Column(nullable = false)
     @Min(0)
     private int quantity;
-    @Column(nullable = false)
-    private boolean isDeleted = false;
+//    @Column(nullable = false)
+//    private boolean isDeleted = false;
 }
