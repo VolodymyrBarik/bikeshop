@@ -14,13 +14,11 @@ import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "order_items")
-@SQLDelete(sql = "UPDATE order_items SET is_deleted=true WHERE id=?")
 public class OrderItem {
 
     @Id
@@ -41,7 +39,4 @@ public class OrderItem {
     @Column(nullable = false)
     @Min(0)
     private BigDecimal price;
-
-    @Column(nullable = false)
-    private boolean isDeleted = false;
 }

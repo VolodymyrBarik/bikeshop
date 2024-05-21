@@ -50,8 +50,6 @@ public class Order {
 
     private String additionalComment;
 
-    //private int estimatedPackageValueForPostOperator;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems;
 

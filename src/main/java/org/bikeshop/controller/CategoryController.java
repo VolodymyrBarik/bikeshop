@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,8 +36,8 @@ public class CategoryController {
     @Operation(summary = "Get all enabled, non deleted categories",
             description = "Get a list of all enabled, non deleted categories")
     @GetMapping
-    public List<CategoryResponseDto> getAllEnabledNonDeleted() {
-        return categoryService.findAllEnabledNonDeleted();
+    public List<CategoryResponseDto> getAllEnabledNonDeleted(Pageable pageable) {
+        return categoryService.findAllEnabledNonDeleted(pageable);
     }
 
     @Operation(summary = "Get all categories",

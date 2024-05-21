@@ -10,6 +10,7 @@ import org.bikeshop.mapper.CategoryMapper;
 import org.bikeshop.model.Category;
 import org.bikeshop.repository.CategoryRepository;
 import org.bikeshop.service.CategoryService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponseDto> findAllEnabledNonDeleted() {
+    public List<CategoryResponseDto> findAllEnabledNonDeleted(Pageable pageable) {
         return categoryRepository.findAll().stream()
                 .filter(Category::isEnabled)
                 .filter(Predicate.not(Category::isDeleted))
@@ -42,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponseDto> findAll() {
+    public List<CategoryResponseDto> findAll(Pageable pageable) {
         return categoryRepository.findAll().stream()
                 .map(mapper::toDto)
                 .toList();
