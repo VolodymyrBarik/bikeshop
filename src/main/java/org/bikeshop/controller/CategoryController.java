@@ -43,8 +43,8 @@ public class CategoryController {
     @Operation(summary = "Get all categories",
             description = "Get a list of all categories including disabled and deleted")
     @GetMapping("/all")
-    public List<CategoryResponseDto> getAll() {
-        return categoryService.findAll();
+    public List<CategoryResponseDto> getAll(Pageable pageable) {
+        return categoryService.findAll(pageable);
     }
 
     @Operation(summary = "Get a category", description = "Returns a category by it's id")

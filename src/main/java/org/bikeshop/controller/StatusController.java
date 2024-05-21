@@ -4,16 +4,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.dto.request.CreateBrandRequestDto;
 import org.bikeshop.dto.request.CreateStatusRequestDto;
-import org.bikeshop.dto.response.BrandResponseDto;
 import org.bikeshop.dto.response.StatusResponseDto;
 import org.bikeshop.service.StatusService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -67,34 +64,10 @@ public class StatusController {
     }
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Enable a brand", description = "Enables a brand by it's id")
-    @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{id}/enable")
-    public void enableBrand(@PathVariable Long id) {
-        brandService.enableBrand(id);
-    }
-
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Disable a brand", description = "Disables a brand by it's id")
-    @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{id}/disable")
-    public void disableBrand(@PathVariable Long id) {
-        brandService.disableBrand(id);
-    }
-
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Delete a brand", description = "Deletes a brand by it's id")
+    @Operation(summary = "Delete a status", description = "Deletes a status by it's id")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        brandService.deleteById(id);
-    }
-
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Undelete a brand", description = "Undeletes a brand by it's id")
-    @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{id}/undelete")
-    public void undelete(@PathVariable Long id) {
-        brandService.undeleteById(id);
+        statusService.delete(id);
     }
 }
