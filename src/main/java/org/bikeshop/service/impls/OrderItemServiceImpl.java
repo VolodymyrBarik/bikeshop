@@ -5,13 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.mapper.OrderItemMapper;
+import org.bikeshop.model.Order;
 import org.bikeshop.model.OrderItem;
 import org.bikeshop.model.User;
 import org.bikeshop.repository.OrderItemRepository;
 import org.bikeshop.repository.OrderRepository;
 import org.bikeshop.service.OrderItemService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
@@ -42,6 +45,16 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItemResponseDto getItemFromOrder(Long orderId, User user, Long orderItemId) {
-        return null;
+        List<Long> orderItemsIds = getOrderItemByOrderId(orderId, user).stream()
+                .map(OrderItemResponseDto::getId)
+                .toList();
+        if (orderItemsIds.contains(orderItemId)) {
+            OrderItem orderItem = orderItemRepository
+                    .findById(orderItemId).orElseThrow(() -> new EntityNotFoundException(
+                            "No such item " + orderItemId + " in this order " + orderId));
+            return orderItemMapper.toResponseDto(orderItem);
+        }
+        throw new EntityNotFoundException("No such item "
+                + orderItemId + " in this order " + orderId);
     }
 }
