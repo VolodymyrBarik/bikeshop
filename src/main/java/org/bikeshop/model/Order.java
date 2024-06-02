@@ -61,4 +61,7 @@ public class Order {
 
     @Column(nullable = false)
     private boolean areGoodsWrittenOff = false;
+
+    @Column(nullable = false)
+    private boolean isPaid = false;
 }

@@ -31,3 +31,5 @@ databaseChangeLog:
       file: db/changelog/changes/15-create-product_images-table.yaml
   - include:
       file: db/changelog/changes/16-update-products-table-rename-is_deleted-column-to-deleted.yaml
+  - include:
+      file: db/changelog/changes/17-update-order-table-add-is_paid-column.yaml

@@ -30,3 +30,16 @@ databaseChangeLog:
                   name: is_deleted
                   type: boolean
                   defaultValueBoolean: false
+  - changeSet:
+      id: insert_new_status
+      author: Volodymyr_Barasiuk
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: name
+                  value: NEW
+              - column:
+                  name: is_active
+                  valueBoolean: true
