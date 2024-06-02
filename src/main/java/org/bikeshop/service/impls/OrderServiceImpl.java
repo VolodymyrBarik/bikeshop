@@ -3,10 +3,13 @@ package org.bikeshop.service.impls;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.OrderStatusRequestDto;
+import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.mapper.OrderItemMapper;
@@ -50,12 +53,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResponseDto> findAll(User user, Pageable pageable) {
-        return List.of();
+        List<Order> allOrderByUserId = orderRepository.findAllByUserId(user.getId(), pageable);
+        return allOrderByUserId.stream()
+                .map(orderMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void updateStatus(Long orderId, OrderStatusRequestDto statusRequestDto) {
-
+        Status statusFromDb = statusRepository.findById(statusRequestDto.getStatusId()).orElseThrow(
+                () -> new NoSuchElementException(
+                        "Can't find status with id " + statusRequestDto.getStatusId()));
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Can't find order number # " + orderId));
+        order.setCurrentStatus(statusFromDb);
+        orderRepository.save(order);
     }
 
     private Order setUpOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
@@ -106,5 +118,19 @@ public class OrderServiceImpl implements OrderService {
 
     private void deleteCartItemFromShoppingCart(CartItem cartItem) {
         cartItemRepository.delete(cartItem);
+    }
+
+    private OrderResponseDto getOrderConfirmation(Order orderFromDb, User user) {
+        OrderResponseDto responseDto = new OrderResponseDto();
+        responseDto.setId(orderFromDb.getId());
+        responseDto.setOrderDate(orderFromDb.getOrderDate());
+        Set<OrderItemResponseDto> orderItemsResponseDtoSet = orderFromDb.getOrderItems().stream()
+                .map(orderItemMapper::toResponseDto)
+                .collect(Collectors.toSet());
+        responseDto.setOrderItems(orderItemsResponseDtoSet);
+        responseDto.setUserId(orderFromDb.getUser().getId());
+        responseDto.setStatus(orderFromDb.getCurrentStatus().getName());
+        responseDto.setTotal(orderFromDb.getTotal());
+        return responseDto;
     }
 }
