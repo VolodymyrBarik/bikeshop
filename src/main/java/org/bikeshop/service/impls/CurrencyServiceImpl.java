@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.CreateCurrencyRequestDto;
+import org.bikeshop.dto.request.ExchangeRateRequestDto;
 import org.bikeshop.dto.response.CurrencyResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.mapper.CurrencyMapper;
 import org.bikeshop.model.Currency;
 import org.bikeshop.repository.CurrencyRepository;
 import org.bikeshop.service.CurrencyService;
+import org.bikeshop.service.ProductService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class CurrencyServiceImpl implements CurrencyService {
     private final CurrencyRepository currencyRepository;
     private final CurrencyMapper mapper;
+    private final ProductService productService;
 
     @Override
     public CurrencyResponseDto save(CreateCurrencyRequestDto requestDto) {
@@ -55,6 +58,15 @@ public class CurrencyServiceImpl implements CurrencyService {
         currencyFromDb.setName(requestDto.getName());
         currencyFromDb.setExchangeRate(requestDto.getExchangeRate());
         currencyRepository.save(currencyFromDb);
+    }
+
+    @Override
+    public void updateRate(Long id, ExchangeRateRequestDto requestDto) {
+        Currency currencyFromDb = currencyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find currency by id " + id));
+        currencyFromDb.setExchangeRate(requestDto.getExchangeRate());
+        currencyRepository.save(currencyFromDb);
+        productService.updatePriceByCurrency(id);
     }
 
     @Override

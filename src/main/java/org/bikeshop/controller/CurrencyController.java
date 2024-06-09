@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.CreateCurrencyRequestDto;
+import org.bikeshop.dto.request.ExchangeRateRequestDto;
 import org.bikeshop.dto.response.CurrencyResponseDto;
 import org.bikeshop.service.CurrencyService;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,6 @@ public class CurrencyController {
         return currencyService.findById(id);
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Update a currency", description = "Updates a currency by it's id")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
@@ -59,6 +59,15 @@ public class CurrencyController {
                        @RequestBody
                        @Valid CreateCurrencyRequestDto requestDto) {
         currencyService.update(id, requestDto);
+    }
+
+    @Operation(summary = "Update an exchange rate", description = "Updates a currency exchange rate")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("rates/{id}")
+    public void update(@PathVariable Long id,
+                       @RequestBody
+                       @Valid ExchangeRateRequestDto requestDto) {
+        currencyService.updateRate(id, requestDto);
     }
 
     @Operation(summary = "Enable a currency", description = "Enables a currency by it's id")

@@ -70,6 +70,11 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
+    @Override
+    public void updateOrder(Long orderId, OrderStatusRequestDto statusRequestDto) {
+
+    }
+
     private Order setUpOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
         Order order = new Order();
         Status statusNEWFromDb = statusRepository.findById(1L)

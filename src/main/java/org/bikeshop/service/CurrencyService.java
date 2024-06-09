@@ -2,6 +2,7 @@ package org.bikeshop.service;
 
 import java.util.List;
 import org.bikeshop.dto.request.CreateCurrencyRequestDto;
+import org.bikeshop.dto.request.ExchangeRateRequestDto;
 import org.bikeshop.dto.response.CurrencyResponseDto;
 
 public interface CurrencyService {
@@ -14,6 +15,8 @@ public interface CurrencyService {
     List<CurrencyResponseDto> findAllEnabledNonDeleted();
 
     void update(Long id, CreateCurrencyRequestDto requestDto);
+
+    void updateRate(Long id, ExchangeRateRequestDto requestDto);
 
     void delete(Long id);
 

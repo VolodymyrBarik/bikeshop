@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCurrency(currencyFromDb);
         Category categoryFromDb = getCategory(requestDto.getCategoryId());
         product.setCategory(categoryFromDb);
+        product.setPriceInCurrency(requestDto.getPriceInCurrency());
         BigDecimal priceUah = getPriceUah(product);
         product.setPriceUah(priceUah);
         BigDecimal wholesalePrice = getWholesalePrice(product);
@@ -63,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
         Product productFromDb = productRepository.findByIdWithImages(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find product by id " + id));
         return mapper.toDto(productFromDb);
+    }
+
+    @Override
+    public List<Product> findAllByCurrencyId(Long currencyId) {
+        return productRepository.findAllByCurrencyId(currencyId);
     }
 
     @Override
@@ -102,6 +108,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAllActive(productSpecification, pageable).stream()
                 .map(mapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public void updatePriceByCurrency(Long currencyId) {
+        productRepository.findAllByCurrencyId(currencyId).stream()
+                .peek(product -> {
+                    product.setPriceUah(getPriceUah(product));
+                    product.setWholesalePrice(getWholesalePrice(product));
+                }).forEach(productRepository::save);
     }
 
     private Currency getCurrency(Long id) {
