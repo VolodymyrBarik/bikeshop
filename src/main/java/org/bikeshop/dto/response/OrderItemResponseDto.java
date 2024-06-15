@@ -8,5 +8,6 @@ import lombok.Setter;
 public class OrderItemResponseDto {
     private Long id;
     private Long productId;
+    private Long price;
     private int quantity;
 }

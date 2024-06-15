@@ -12,11 +12,13 @@ import org.bikeshop.dto.request.OrderStatusRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
+import org.bikeshop.exception.InsufficientProductQuantityException;
 import org.bikeshop.mapper.OrderItemMapper;
 import org.bikeshop.mapper.OrderMapper;
 import org.bikeshop.model.CartItem;
 import org.bikeshop.model.Order;
 import org.bikeshop.model.OrderItem;
+import org.bikeshop.model.Product;
 import org.bikeshop.model.ShoppingCart;
 import org.bikeshop.model.Status;
 import org.bikeshop.model.User;
@@ -25,6 +27,7 @@ import org.bikeshop.repository.OrderItemRepository;
 import org.bikeshop.repository.OrderRepository;
 import org.bikeshop.repository.ShoppingCartRepository;
 import org.bikeshop.repository.StatusRepository;
+import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.service.OrderService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+    private final static Long NEW_ORDER_STATUS = 1L;
     private final ShoppingCartRepository shoppingCartRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
@@ -39,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
     private final OrderMapper orderMapper;
     private final StatusRepository statusRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public OrderResponseDto create(User user, OrderRequestDto dto) {
@@ -70,14 +75,28 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
+    public Boolean checkWhetherTheresEnoughSCProductsInStock(ShoppingCart shoppingCart) {
+        Set<CartItem> cartItems = shoppingCart.getCartItems();
+        for (CartItem item : cartItems) {
+            Product productFromDb =
+                    productRepository.findById(item.getProduct().getId()).orElseThrow(
+                            () -> new EntityNotFoundException(
+                                    "Cant find product with id " + item.getProduct().getId()));
+            if (item.getQuantity() > productFromDb.getQuantity()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void updateOrder(Long orderId, OrderStatusRequestDto statusRequestDto) {
-
+        eee nu tut kakbi nado dopisat
     }
 
     private Order setUpOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
         Order order = new Order();
-        Status statusNEWFromDb = statusRepository.findById(1L)
+        Status statusNEWFromDb = statusRepository.findById(NEW_ORDER_STATUS)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find status with id 1"));
         order.setCurrentStatus(statusNEWFromDb);
         order.setUser(user);
@@ -115,6 +134,7 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setOrder(order);
         orderItem.setProduct(cartItem.getProduct());
         orderItem.setQuantity(cartItem.getQuantity());
+        subtractCartItemQuantityFromProductQuantity(cartItem);
         BigDecimal price = new BigDecimal(String.valueOf(cartItem.getProduct().getPriceUah()));
         price = price.multiply(new BigDecimal(cartItem.getQuantity()));
         orderItem.setPrice(price);
@@ -134,8 +154,22 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toSet());
         responseDto.setOrderItems(orderItemsResponseDtoSet);
         responseDto.setUserId(orderFromDb.getUser().getId());
-        responseDto.setStatus(orderFromDb.getCurrentStatus().getName());
+        responseDto.setStatusId(orderFromDb.getCurrentStatus().getId());
         responseDto.setTotal(orderFromDb.getTotal());
         return responseDto;
+    }
+
+    private void subtractCartItemQuantityFromProductQuantity(CartItem cartItem) {
+        Product productFromDb = productRepository.findById(cartItem.getProduct().getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Can't find product with id " + cartItem.getProduct().getId()));
+        int remainingQuantity = productFromDb.getQuantity() - cartItem.getQuantity();
+        if (remainingQuantity >= 0) {
+            productFromDb.setQuantity(remainingQuantity);
+            productRepository.save(productFromDb);
+        } else {
+            throw new InsufficientProductQuantityException(productFromDb.getTitle() +
+                    "is not enough, please lower quantity in your shopping cart");
+        }
     }
 }
