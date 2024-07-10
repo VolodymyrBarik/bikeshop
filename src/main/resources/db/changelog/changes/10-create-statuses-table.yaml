@@ -42,4 +42,4 @@ databaseChangeLog:
                   value: NEW
               - column:
                   name: is_active
-                  valueBoolean: true
+                  defaultValueBoolean: true

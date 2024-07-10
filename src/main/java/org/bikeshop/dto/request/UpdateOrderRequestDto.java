@@ -1,7 +1,7 @@
 package org.bikeshop.dto.request;
 
+import jakarta.persistence.Column;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
@@ -18,8 +18,10 @@ public class UpdateOrderRequestDto {
     private String currentStatus;
     private Set<OrderItemResponseDto> orderItems;
     private List<OrderStatusHistoryResponseDto> orderStatusHistory;
-    private LocalDateTime orderDate;
     private BigDecimal total;
+    private String shippingAddress;
+    private String additionalComment;
+    private boolean isCalculated;
     private Boolean isPaid;
     private Boolean isDeleted;
 }

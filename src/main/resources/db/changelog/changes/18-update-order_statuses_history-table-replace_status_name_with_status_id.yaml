@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: replace_status_name_with_status_id
+      author: Volodymyr_Barasiuk
+      changes:
+        - dropColumn:
+            tableName: order_statuses_history
+            columnName: status_name
+        - addColumn:
+            tableName: order_statuses_history
+            columns:
+              - column:
+                  name: status_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.OrderStatusRequestDto;
+import org.bikeshop.dto.request.UpdateOrderRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
@@ -18,6 +19,7 @@ import org.bikeshop.mapper.OrderMapper;
 import org.bikeshop.model.CartItem;
 import org.bikeshop.model.Order;
 import org.bikeshop.model.OrderItem;
+import org.bikeshop.model.OrderStatusHistory;
 import org.bikeshop.model.Product;
 import org.bikeshop.model.ShoppingCart;
 import org.bikeshop.model.Status;
@@ -29,6 +31,7 @@ import org.bikeshop.repository.ShoppingCartRepository;
 import org.bikeshop.repository.StatusRepository;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.service.OrderService;
+import org.bikeshop.service.OrderStatusHistoryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final StatusRepository statusRepository;
     private final ProductRepository productRepository;
+    private final OrderStatusHistoryService orderStatusHistoryService;
 
     @Override
     public OrderResponseDto create(User user, OrderRequestDto dto) {
@@ -57,9 +61,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponseDto> findAll(User user, Pageable pageable) {
+    public List<OrderResponseDto> findAllByUser(User user, Pageable pageable) {
         List<Order> allOrderByUserId = orderRepository.findAllByUserId(user.getId(), pageable);
         return allOrderByUserId.stream()
+                .map(orderMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponseDto> findAll(Pageable pageable) {
+        List<Order> allOrdersFromDb = orderRepository.findAll();
+        return allOrdersFromDb.stream()
                 .map(orderMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -72,10 +84,12 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order number # " + orderId));
         order.setCurrentStatus(statusFromDb);
+
         orderRepository.save(order);
     }
 
-    public Boolean checkWhetherTheresEnoughSCProductsInStock(ShoppingCart shoppingCart) {
+    public Boolean checkWhetherTheresEnoughSCProductsInStock(ShoppingCart shoppingCart)
+            throws InsufficientProductQuantityException {
         Set<CartItem> cartItems = shoppingCart.getCartItems();
         for (CartItem item : cartItems) {
             Product productFromDb =
@@ -83,21 +97,25 @@ public class OrderServiceImpl implements OrderService {
                             () -> new EntityNotFoundException(
                                     "Cant find product with id " + item.getProduct().getId()));
             if (item.getQuantity() > productFromDb.getQuantity()) {
-                return false;
+                throw new InsufficientProductQuantityException(
+                        "Unfortunately there's only " + productFromDb.getQuantity() + " " +
+                                productFromDb.getTitle() + " left in stock");
             }
         }
         return true;
     }
 
     @Override
-    public void updateOrder(Long orderId, OrderStatusRequestDto statusRequestDto) {
-        eee nu tut kakbi nado dopisat
+    public void updateOrder(Long orderId, UpdateOrderRequestDto requestDto) {
+        Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Can't find order with id " + orderId));
     }
 
     private Order setUpOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
         Order order = new Order();
         Status statusNEWFromDb = statusRepository.findById(NEW_ORDER_STATUS)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find status with id 1"));
+        //orderStatusService.updateOrderStatus()
         order.setCurrentStatus(statusNEWFromDb);
         order.setUser(user);
         order.setShippingAddress(dto.getShippingAddress());
@@ -169,7 +187,12 @@ public class OrderServiceImpl implements OrderService {
             productRepository.save(productFromDb);
         } else {
             throw new InsufficientProductQuantityException(productFromDb.getTitle() +
-                    "is not enough, please lower quantity in your shopping cart");
+                    "is not enough, there's only " + productFromDb.getQuantity() +
+                    " left in stock");
         }
+    }
+
+    private OrderStatusHistory updateOrderStatusHistory(Long orderId, Long statusId) {
+        return
     }
 }

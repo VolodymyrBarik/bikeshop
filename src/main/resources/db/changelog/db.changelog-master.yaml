@@ -33,3 +33,9 @@ databaseChangeLog:
       file: db/changelog/changes/16-update-products-table-rename-is_deleted-column-to-deleted.yaml
   - include:
       file: db/changelog/changes/17-update-order-table-add-is_paid-column.yaml
+  - include:
+      file: db/changelog/changes/18-update-order_statuses_history-table-replace_status_name_with_status_id.yaml
+  - include:
+      file: db/changelog/changes/19-update-cart_items-drop-column-is_deleted.yaml
+  - include:
+      file: db/changelog/changes/20-update-table-orders-remove-column-are_goods_written_off.yaml

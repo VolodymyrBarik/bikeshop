@@ -13,6 +13,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
@@ -37,7 +39,7 @@ public class Order {
     private Status currentStatus;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderStatusHistory> orderStatusHistory;
+    private List<OrderStatusHistory> orderStatusHistory = new ArrayList<>();
 
     @Column(nullable = false)
     private BigDecimal total;
@@ -50,17 +52,14 @@ public class Order {
 
     private String additionalComment;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderItem> orderItems;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(nullable = false)
     private boolean isDeleted = false;
 
     @Column(nullable = false)
     private boolean isCalculated = false;
-
-    @Column(nullable = false)
-    private boolean areGoodsWrittenOff = false;
 
     @Column(nullable = false)
     private boolean isPaid = false;
