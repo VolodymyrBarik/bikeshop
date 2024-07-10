@@ -16,7 +16,7 @@ public class OrderResponseDto {
     private String currentStatus;
     private Set<OrderItemResponseDto> orderItems;
     private List<OrderStatusHistoryResponseDto> orderStatusHistory;
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDateTime;
     private BigDecimal total;
     private Boolean isPaid;
     private boolean isDeleted;

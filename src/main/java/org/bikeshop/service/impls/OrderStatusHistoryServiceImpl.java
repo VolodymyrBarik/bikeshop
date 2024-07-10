@@ -1,7 +1,9 @@
 package org.bikeshop.service.impls;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.response.OrderStatusHistoryResponseDto;
 import org.bikeshop.mapper.OrderStatusHistoryMapper;
@@ -33,10 +35,10 @@ public class OrderStatusHistoryServiceImpl implements OrderStatusHistoryService 
 
     @Override
     public List<OrderStatusHistoryResponseDto> getAllByOrder(Long orderId) {
-        List<OrderStatusHistory> allByOrderId =
-                orderStatusHistoryRepository.findAllByOrderId(orderId);
-        return allByOrderId.stream()
+        return orderStatusHistoryRepository.findAllByOrderId(orderId)
+                .stream()
                 .map(orderStatusHistoryMapper::toResponseDto)
+                .sorted(Comparator.comparing(OrderStatusHistoryResponseDto::getTimestamp).reversed())
                 .toList();
     }
 }
