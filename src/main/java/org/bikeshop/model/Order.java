@@ -39,7 +39,7 @@ public class Order {
     private Status currentStatus;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderStatusHistory> orderStatusHistory = new ArrayList<>();
+    private List<OrderStatusHistory> orderStatusHistoryList = new ArrayList<>();
 
     @Column(nullable = false)
     private BigDecimal total;

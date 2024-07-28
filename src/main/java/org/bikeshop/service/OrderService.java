@@ -16,7 +16,7 @@ public interface OrderService {
 
     List<OrderResponseDto> findAll(Pageable pageable);
 
-    void updateStatus(Long orderId, OrderStatusRequestDto statusRequestDto);
+    void updateStatus(Long orderId, Long statusId);
 
     void updateOrder(Long orderId, UpdateOrderRequestDto statusRequestDto);
 

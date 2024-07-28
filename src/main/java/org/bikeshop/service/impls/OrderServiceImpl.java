@@ -1,36 +1,26 @@
 package org.bikeshop.service.impls;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
-import org.bikeshop.dto.request.OrderStatusRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderResponseDto;
+import org.bikeshop.dto.response.OrderStatusHistoryResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.exception.InsufficientProductQuantityException;
 import org.bikeshop.mapper.OrderItemMapper;
 import org.bikeshop.mapper.OrderMapper;
-import org.bikeshop.model.CartItem;
-import org.bikeshop.model.Order;
-import org.bikeshop.model.OrderItem;
-import org.bikeshop.model.Product;
-import org.bikeshop.model.ShoppingCart;
-import org.bikeshop.model.Status;
-import org.bikeshop.model.User;
+import org.bikeshop.model.*;
 import org.bikeshop.repository.*;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.service.OrderService;
 import org.bikeshop.service.OrderStatusHistoryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final OrderStatusHistoryService orderStatusHistoryService;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
+    private final UserRepository userRepository;
 
     @Override
     public OrderResponseDto create(User user, OrderRequestDto dto) {
@@ -77,14 +68,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateStatus(Long orderId, OrderStatusRequestDto statusRequestDto) {
-        Status statusFromDb = statusRepository.findById(statusRequestDto.getStatusId()).orElseThrow(
-                () -> new NoSuchElementException(
-                        "Can't find status with id " + statusRequestDto.getStatusId()));
+    public void updateStatus(Long orderId, Long statusId) {
+        Status statusFromDb = statusRepository.findById(statusId).orElseThrow(() -> new NoSuchElementException(
+                "Can't find status with id " + statusId + " in order " + orderId));
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order number # " + orderId));
         order.setCurrentStatus(statusFromDb);
-
+        OrderStatusHistoryResponseDto orderStatusHistoryResponseDto = orderStatusHistoryService.create(order, statusFromDb);
+        updateOrderStatusHistoryList(orderId, orderStatusHistoryResponseDto.getId());
         orderRepository.save(order);
     }
 
@@ -109,6 +100,66 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(Long orderId, UpdateOrderRequestDto requestDto) {
         Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order with id " + orderId));
+        if (requestDto.getUserId() != null && !Objects.equals(orderFromDb.getUser().getId(), requestDto.getUserId())) {
+            User user = userRepository.findById(requestDto.getUserId()).orElseThrow(
+                    () -> new EntityNotFoundException("Can't find user with id " + requestDto.getUserId()));
+            orderFromDb.setUser(user);
+        }
+
+        if (requestDto.getStatusId() != null && !Objects.equals(
+                requestDto.getStatusId(), orderFromDb.getCurrentStatus().getId())) {
+
+            updateStatus(orderId, requestDto.getStatusId());
+        }
+
+        if (requestDto.getTotal() != null && !Objects.equals(orderFromDb.getTotal(), requestDto.getTotal())) {
+            orderFromDb.setTotal(requestDto.getTotal());
+        }
+
+        if (requestDto.getShippingAddress() != null && !Objects.equals(
+                orderFromDb.getShippingAddress(), requestDto.getShippingAddress())) {
+            orderFromDb.setShippingAddress(requestDto.getShippingAddress());
+        }
+
+        if (requestDto.getAdditionalComment() != null) {
+            orderFromDb.setAdditionalComment(requestDto.getAdditionalComment());
+        }
+
+        orderFromDb.setCalculated(requestDto.isCalculated());
+
+        if (requestDto.getIsPaid() != null) {
+            orderFromDb.setPaid(requestDto.getIsPaid());
+        }
+
+        if (requestDto.getIsDeleted() != null) {
+            orderFromDb.setDeleted(requestDto.getIsDeleted());
+        }
+
+        // Оновлення списку OrderItems
+        if (requestDto.getOrderItems() != null) {
+            // Видалення старих записів
+            orderFromDb.getOrderItems().clear();
+            for (OrderItemResponseDto orderItemDto : requestDto.getOrderItems()) {
+                OrderItem orderItem = new OrderItem();
+                // Присвоєння властивостей orderItem на основі orderItemDto
+                orderItem.setOrder(orderFromDb);
+                orderFromDb.getOrderItems().add(orderItem);
+            }
+        }
+        //update orderStatusHistory
+        // Оновлення списку OrderStatusHistoryList
+        if (requestDto.getOrderStatusHistory() != null) {
+            // Видалення старих записів
+            orderFromDb.getOrderStatusHistoryList().clear();
+            for (OrderStatusHistoryResponseDto statusHistoryDto : requestDto.getOrderStatusHistory()) {
+                OrderStatusHistory statusHistory = new OrderStatusHistory();
+                // Присвоєння властивостей statusHistory на основі statusHistoryDto
+                statusHistory.setOrder(orderFromDb);
+                orderFromDb.getOrderStatusHistoryList().add(statusHistory);
+            }
+        }
+
+        orderRepository.save(orderFromDb);
     }
 
     private Order setUpOrder(User user, OrderRequestDto dto, ShoppingCart shoppingCart) {
@@ -192,11 +243,15 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private void updateOrderStatusHistory(Long orderId, Long statusId) {
+    private void updateOrderStatusHistoryList(Long orderId, Long orderStatusHistoryId) {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order with id " + orderId));
-        Status status = statusRepository.findById(statusId).orElseThrow(
-                () -> new EntityNotFoundException("Can't find status with id " + statusId));
-        orderStatusHistoryService.create(order, status);
+        List<OrderStatusHistory> orderStatusHistoryList = order.getOrderStatusHistoryList();
+
+        OrderStatusHistory orderStatusHistory = orderStatusHistoryRepository.findById(orderStatusHistoryId).orElseThrow(() -> new EntityNotFoundException(
+                "Can't find orderStatusHistory with id " + orderStatusHistoryId));
+        orderStatusHistoryList.add(orderStatusHistory);
+        order.setOrderStatusHistoryList(orderStatusHistoryList);
+        orderRepository.save(order);
     }
 }
