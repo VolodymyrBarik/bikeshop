@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-roles-to-roles-table
+      author: VolodymyrBarasiuk
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: ADMIN
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: WHOLESALE_USER
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: RETAIL_USER
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: MECHANIC

@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: remove_are_goods_written_off_from_orders
+      author: Volodymyr_Barasiuk
+      changes:
+        - dropColumn:
+            columnName: are_goods_written_off
+            tableName: orders

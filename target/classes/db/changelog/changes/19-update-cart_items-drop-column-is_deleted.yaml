@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: remove_is_deleted_from_cart_items
+      author: Volodymyr_Barasiuk
+      changes:
+        - dropColumn:
+            columnName: is_deleted
+            tableName: cart_items

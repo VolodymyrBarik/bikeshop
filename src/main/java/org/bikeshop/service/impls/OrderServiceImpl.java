@@ -37,16 +37,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderStatusHistoryService orderStatusHistoryService;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
     private final UserRepository userRepository;
+    private final ShoppingCartServiceImpl shoppingCartServiceImpl;
 
     @Override
     public OrderResponseDto create(User user, OrderRequestDto dto) {
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser_Id(user.getId())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "You're shopping cart is empty, "
-                                + "you have to place good's into the s" +
-                                "opping cart"));
+                                + "you have to place good's into the shopping cart"));
         Order orderFromDb = setUpOrder(user, dto, shoppingCart);
         createOrderItems(shoppingCart, orderFromDb);
+        clearUserShoppingCart(user);
         return getOrderConfirmation(orderFromDb, user);
     }
 
@@ -171,6 +172,8 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(user);
         order.setShippingAddress(dto.getShippingAddress());
         order.setOrderDate(LocalDateTime.now());
+        //orderItems add to order
+
         BigDecimal totalPrice = getTotalPrice(shoppingCart.getCartItems());
         order.setTotal(totalPrice);
         return saveOrderToDb(order);
@@ -253,5 +256,14 @@ public class OrderServiceImpl implements OrderService {
         orderStatusHistoryList.add(orderStatusHistory);
         order.setOrderStatusHistoryList(orderStatusHistoryList);
         orderRepository.save(order);
+    }
+
+    private void clearUserShoppingCart(User user) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser_Id(user.getId())
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Can't find user shopping cart with user id " + user.getId()));
+        Set<CartItem> cartItems = shoppingCart.getCartItems();
+        cartItemRepository.deleteAll(cartItems);
     }
 }

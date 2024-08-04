@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_roles_table
+      author: Volodymyr_Barasiuk
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role_name
+                  type: enum('ADMIN', 'WHOLESALE_USER', 'RETAIL_USER', 'MECHANIC')
+                  constraints:
+                    unique: true
+                    nullable: false

@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_order_statuses_history_table
+      author: Volodymyr_Barasiuk
+      changes:
+        - createTable:
+            tableName: order_statuses_history
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: status_name
+                  type: VARCHAR(255)
+              - column:
+                  name: timestamp
+                  type: TIMESTAMP
+              - column:
+                  name: login
+                  type: VARCHAR(255)
+              - column:
+                  name: comment
+                  type: VARCHAR(255)
+              - column:
+                  name: order_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false

@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-order-table-add-is_paid-column
+      author: Volodymyr_Barasiuk
+      changes:
+        - addColumn:
+            tableName: orders
+            columns:
+              - column:
+                  name: is_paid
+                  type: boolean
+                  constraints:
+                    nullable: false
