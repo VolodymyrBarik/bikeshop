@@ -25,7 +25,7 @@ public class OrderStatusHistoryServiceImpl implements OrderStatusHistoryService 
         OrderStatusHistory orderStatusHistory = new OrderStatusHistory();
         orderStatusHistory.setOrder(order);
         orderStatusHistory.setStatus(status);
-        orderStatusHistory.setComment(status.getMessage());
+        orderStatusHistory.setComment(status.getDescription());
         //orderStatusHistory.setLogin();
         orderStatusHistory.setTimestamp(LocalDateTime.now());
         OrderStatusHistory orderStatusHistoryFromDb =

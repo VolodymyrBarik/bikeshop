@@ -1,9 +1,9 @@
 package org.bikeshop.service.impls;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.CreateStatusRequestDto;
-import org.bikeshop.dto.request.StatusRequestDto;
 import org.bikeshop.dto.response.StatusResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.mapper.StatusMapper;
@@ -53,7 +53,7 @@ public class StatusServiceImpl implements StatusService {
         Status statusFromDb = statusRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find status by id " + id));
         statusFromDb.setName(dto.getName());
-        statusFromDb.setMessage(dto.getMessage());
+        statusFromDb.setDescription(dto.getMessage());
         statusFromDb.setActive(dto.isActive());
         statusFromDb.setDeleted(dto.isDeleted());
         statusRepository.save(statusFromDb);
@@ -62,5 +62,21 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public void delete(Long id) {
         statusRepository.deleteById(id);
+    }
+
+    @Override
+    public void enableStatus(Long id) {
+        Status statusFromDb = statusRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find status by id " + id));
+        statusFromDb.setActive(true);
+        statusRepository.save(statusFromDb);
+    }
+
+    @Override
+    public void disableStatus(Long id) {
+        Status statusFromDb = statusRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find status by id " + id));
+        statusFromDb.setActive(false);
+        statusRepository.save(statusFromDb);
     }
 }

@@ -72,7 +72,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(InsufficientProductQuantityException.class)
     public ResponseEntity<Object> handleQuantityIsNotEnoughException(
             InsufficientProductQuantityException exception) {
         Map<String, Object> body = new LinkedHashMap<>();

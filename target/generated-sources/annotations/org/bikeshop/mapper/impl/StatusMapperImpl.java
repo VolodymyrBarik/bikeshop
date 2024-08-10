@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-04T21:15:00+0300",
+    date = "2024-08-10T17:14:18+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)"
 )
 @Component
@@ -29,9 +29,6 @@ public class StatusMapperImpl implements StatusMapper {
         if ( status.getName() != null ) {
             statusResponseDto.setName( status.getName() );
         }
-        if ( status.getMessage() != null ) {
-            statusResponseDto.setMessage( status.getMessage() );
-        }
         statusResponseDto.setActive( status.isActive() );
         statusResponseDto.setDeleted( status.isDeleted() );
 
@@ -48,9 +45,6 @@ public class StatusMapperImpl implements StatusMapper {
 
         if ( requestDto.getName() != null ) {
             status.setName( requestDto.getName() );
-        }
-        if ( requestDto.getMessage() != null ) {
-            status.setMessage( requestDto.getMessage() );
         }
         status.setActive( requestDto.isActive() );
         status.setDeleted( requestDto.isDeleted() );

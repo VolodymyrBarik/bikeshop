@@ -1,12 +1,8 @@
 package org.bikeshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
-import org.bikeshop.dto.request.OrderStatusRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.model.User;
@@ -18,13 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController("/orders")

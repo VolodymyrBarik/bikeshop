@@ -20,7 +20,7 @@ databaseChangeLog:
                     unique: true
                     nullable: false
               - column:
-                  name: message
+                  name: description
                   type: varchar(255)
               - column:
                   name: is_active
@@ -42,4 +42,7 @@ databaseChangeLog:
                   value: NEW
               - column:
                   name: is_active
-                  defaultValueBoolean: true
+                  value: "1"
+              - column:
+                  name: description
+                  value: "Статус нового замовлення"

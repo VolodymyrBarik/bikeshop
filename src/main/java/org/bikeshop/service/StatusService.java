@@ -1,10 +1,10 @@
 package org.bikeshop.service;
 
-import java.util.List;
 import org.bikeshop.dto.request.CreateStatusRequestDto;
-import org.bikeshop.dto.request.StatusRequestDto;
 import org.bikeshop.dto.response.StatusResponseDto;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface StatusService {
     StatusResponseDto save(CreateStatusRequestDto requestDto);
@@ -19,4 +19,7 @@ public interface StatusService {
 
     void delete(Long id);
 
+    void enableStatus(Long id);
+
+    void disableStatus(Long id);
 }
