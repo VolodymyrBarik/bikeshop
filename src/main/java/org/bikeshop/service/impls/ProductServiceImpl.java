@@ -3,6 +3,7 @@ package org.bikeshop.service.impls;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
@@ -53,16 +54,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponseDto> findAll(Pageable pageable) {
+    public List<ProductResponseDto> findAllIncludingDisabled(Pageable pageable) {
         return productRepository.findAll(pageable).stream()
                 .map(mapper::toDto)
                 .toList();
     }
 
     @Override
+    public List<ProductResponseDto> findAllEnabled(Pageable pageable) {
+        return productRepository.findAll(pageable).stream()
+                .filter(Product::isEnabled)
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
     public ProductResponseDto findById(Long id) {
-        Product productFromDb = productRepository.findByIdWithImages(id)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find product by id " + id));
+        Product productFromDb = findProductById(id);
         return mapper.toDto(productFromDb);
     }
 
@@ -73,8 +81,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void update(Long id, CreateProductRequestDto dto) {
-        Product productFromDb = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find product by id " + id));
+        Product productFromDb = findProductById(id);
         productFromDb.setProductCode(dto.getProductCode());
         productFromDb.setQuantity(dto.getQuantity());
         productFromDb.setTitle(dto.getTitle());
@@ -119,6 +126,27 @@ public class ProductServiceImpl implements ProductService {
                 }).forEach(productRepository::save);
     }
 
+    @Override
+    public void enable(Long id) {
+        Product productFromDb = findProductById(id);
+        productFromDb.setEnabled(true);
+        productRepository.save(productFromDb);
+    }
+
+    @Override
+    public void disable(Long id) {
+        Product productFromDb = findProductById(id);
+        productFromDb.setEnabled(false);
+        productRepository.save(productFromDb);
+    }
+
+    @Override
+    public void undelete(Long id) {
+        Product productFromDb = findProductById(id);
+        productFromDb.setDeleted(false);
+        productRepository.save(productFromDb);
+    }
+
     private Currency getCurrency(Long id) {
         return currencyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -151,5 +179,10 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NoSuchElementException(
                         "Can't find currency by id " + product.getCurrency().getId()));
         return priceInCurrency.multiply(currency.getExchangeRate());
+    }
+
+    private Product findProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find product by id " + id));
     }
 }

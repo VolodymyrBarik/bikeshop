@@ -16,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
 
     @NonNull
     @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images "
-            + "WHERE p.deleted = false AND p.enabled")
+            + "WHERE p.deleted = false")
     Page<Product> findAll(@NonNull Pageable pageable);
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.images "
@@ -25,7 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
 
     @NonNull
     @Override
-    @Query("SELECT p FROM Product p WHERE p.deleted = false AND p.enabled AND p.id = :id")
+    //@Query("SELECT p FROM Product p WHERE p.deleted = false AND p.enabled AND p.id = :id")
     Optional<Product> findById(@NonNull Long id);
 
     List<Product> findAllByCurrencyId(Long currencyId);

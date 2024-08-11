@@ -1,6 +1,7 @@
 package org.bikeshop.service;
 
 import java.util.List;
+
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
 import org.bikeshop.dto.response.product.ProductResponseDto;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 public interface ProductService {
     ProductResponseDto save(CreateProductRequestDto requestDto);
 
-    List<ProductResponseDto> findAll(Pageable pageable);
+    List<ProductResponseDto> findAllIncludingDisabled(Pageable pageable);
+
+    List<ProductResponseDto> findAllEnabled(Pageable pageable);
 
     ProductResponseDto findById(Long id);
 
@@ -23,6 +26,13 @@ public interface ProductService {
     List<ProductResponseDto> search(ProductSearchParameters searchParameters, Pageable pageable);
 
     void updatePriceByCurrency(Long currencyId);
+
+    void enable(Long id);
+
+    void disable(Long id);
+
+    void undelete(Long id);
+
 
 }
 
