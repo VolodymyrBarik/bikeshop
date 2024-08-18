@@ -17,6 +17,7 @@ import org.bikeshop.service.OrderService;
 import org.bikeshop.service.OrderStatusHistoryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -37,7 +38,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderStatusHistoryService orderStatusHistoryService;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
     private final UserRepository userRepository;
-    private final ShoppingCartServiceImpl shoppingCartServiceImpl;
 
     @Override
     public OrderResponseDto create(User user, OrderRequestDto dto) {
@@ -46,7 +46,6 @@ public class OrderServiceImpl implements OrderService {
                         "You're shopping cart is empty, "
                                 + "you have to place good's into the shopping cart"));
         Order orderFromDb = setUpOrder(user, dto, shoppingCart);
-        createOrderItems(shoppingCart, orderFromDb);
         clearUserShoppingCart(user);
         return getOrderConfirmation(orderFromDb, user);
     }
@@ -176,7 +175,10 @@ public class OrderServiceImpl implements OrderService {
 
         BigDecimal totalPrice = getTotalPrice(shoppingCart.getCartItems());
         order.setTotal(totalPrice);
-        return saveOrderToDb(order);
+        Order savedToDb = saveOrderToDb(order);
+        createOrderItems(shoppingCart, savedToDb);
+        return orderRepository.findById(savedToDb.getId()).orElseThrow(
+                () -> new EntityNotFoundException("Can't find order with id " + savedToDb.getId()));
     }
 
     private BigDecimal getTotalPrice(Set<CartItem> items) {
@@ -224,6 +226,14 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderItemResponseDto> orderItemsResponseDtoSet = orderFromDb.getOrderItems().stream()
                 .map(orderItemMapper::toResponseDto)
                 .collect(Collectors.toSet());
+        //String status = statusRepository.getReferenceById(orderFromDb.getCurrentStatus().getId()).toString();
+        statusRepository.findById(NEW_ORDER_STATUS).ifPresentOrElse(
+                status -> responseDto.setCurrentStatus(status.getName()),
+                () -> {
+                    // Обробка ситуації, коли статус не знайдено, наприклад, встановлення значення за замовчуванням
+                    responseDto.setCurrentStatus("NEW");
+                }
+        );
         responseDto.setOrderItems(orderItemsResponseDtoSet);
         responseDto.setUserId(orderFromDb.getUser().getId());
         responseDto.setStatusId(orderFromDb.getCurrentStatus().getId());
