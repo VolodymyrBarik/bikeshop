@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.bikeshop.dto.response.OrderItemResponseDto;
+import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.mapper.OrderMapper;
 import org.bikeshop.model.Order;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-10T17:14:18+0300",
+    date = "2024-08-25T20:53:00+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)"
 )
 @Component
@@ -49,6 +50,33 @@ public class OrderMapperImpl implements OrderMapper {
         orderResponseDto.setDeleted( order.isDeleted() );
 
         return orderResponseDto;
+    }
+
+    @Override
+    public OrderListDto toListDto(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        OrderListDto orderListDto = new OrderListDto();
+
+        Long id = orderUserId( order );
+        if ( id != null ) {
+            orderListDto.setUserId( id );
+        }
+        String name = orderCurrentStatusName( order );
+        if ( name != null ) {
+            orderListDto.setCurrentStatus( name );
+        }
+        if ( order.getId() != null ) {
+            orderListDto.setId( order.getId() );
+        }
+        if ( order.getTotal() != null ) {
+            orderListDto.setTotal( order.getTotal() );
+        }
+        orderListDto.setDeleted( order.isDeleted() );
+
+        return orderListDto;
     }
 
     private Long orderUserId(Order order) {

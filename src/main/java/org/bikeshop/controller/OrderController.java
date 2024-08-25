@@ -4,13 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
+import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.model.User;
 import org.bikeshop.service.OrderItemService;
 import org.bikeshop.service.OrderService;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -36,19 +35,15 @@ public class OrderController {
     @GetMapping("/all")
     @Operation(summary = "Returns all the orders",
             description = "Returns list of all orders")
-    List<OrderResponseDto> getAll(Authentication authentication, Pageable pageable) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "orderDateTime");
-        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-        return orderService.findAll(sortedPageable);
+    List<OrderListDto> getAll(Authentication authentication, Pageable pageable) {
+        return orderService.findAll(pageable);
     }
 
     @GetMapping
     @Operation(summary = "Returns all the orders belongs to user",
             description = "Returns list of orders belongs to user")
-    List<OrderResponseDto> getUsersOrders(Authentication authentication, Pageable pageable) {
+    List<OrderListDto> getUsersOrders(Authentication authentication, Pageable pageable) {
         User user = (User) authentication.getPrincipal();
-//            Sort sort = Sort.by(Sort.Direction.DESC, "orderDateTime");
-//            Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         return orderService.findAllByUser(user, pageable);
     }
 
@@ -71,7 +66,7 @@ public class OrderController {
         return orderItemService.getItemFromOrder(orderId, user, orderItemId);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{orderId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update order status",

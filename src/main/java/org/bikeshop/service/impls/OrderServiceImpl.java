@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
+import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.dto.response.OrderStatusHistoryResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
@@ -15,7 +16,10 @@ import org.bikeshop.repository.*;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.service.OrderService;
 import org.bikeshop.service.OrderStatusHistoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -51,19 +55,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponseDto> findAllByUser(User user, Pageable pageable) {
-        List<Order> allOrderByUserId = orderRepository.findAllByUserId(user.getId(), pageable);
+    public List<OrderListDto> findAllByUser(User user, Pageable pageable) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "orderDate");
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        List<Order> allOrderByUserId = orderRepository.findAllByUserId(user.getId(), sortedPageable);
         return allOrderByUserId.stream()
-                .map(orderMapper::toDto)
-//                .sorted(Comparator.comparing(OrderResponseDto::getOrderDateTime).reversed())
+                .map(orderMapper::toListDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<OrderResponseDto> findAll(Pageable pageable) {
-        List<Order> allOrdersFromDb = orderRepository.findAll();
+    public List<OrderListDto> findAll(Pageable pageable) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "orderDate");
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        Page<Order> allOrdersFromDb = orderRepository.findAll(sortedPageable);
         return allOrdersFromDb.stream()
-                .map(orderMapper::toDto)
+                .map(orderMapper::toListDto)
                 .collect(Collectors.toList());
     }
 
