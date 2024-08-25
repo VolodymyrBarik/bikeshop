@@ -47,9 +47,9 @@ public class OrderController {
             description = "Returns list of orders belongs to user")
     List<OrderResponseDto> getUsersOrders(Authentication authentication, Pageable pageable) {
         User user = (User) authentication.getPrincipal();
-        Sort sort = Sort.by(Sort.Direction.DESC, "orderDateTime");
-        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-        return orderService.findAllByUser(user, sortedPageable);
+//            Sort sort = Sort.by(Sort.Direction.DESC, "orderDateTime");
+//            Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        return orderService.findAllByUser(user, pageable);
     }
 
     @GetMapping("/{orderId}/items")

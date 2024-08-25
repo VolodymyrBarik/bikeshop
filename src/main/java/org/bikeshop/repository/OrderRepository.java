@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    @EntityGraph(attributePaths = {"orderItems", "orderItems.product"})
+    @EntityGraph(attributePaths = {"orderItems", "orderItems.product", "currentStatus"})
     List<Order> findAllByUserId(Long userId, Pageable pageable);
 
     @NonNull

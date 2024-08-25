@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> allOrderByUserId = orderRepository.findAllByUserId(user.getId(), pageable);
         return allOrderByUserId.stream()
                 .map(orderMapper::toDto)
-                .sorted(Comparator.comparing(OrderResponseDto::getOrderDateTime).reversed())
+//                .sorted(Comparator.comparing(OrderResponseDto::getOrderDateTime).reversed())
                 .collect(Collectors.toList());
     }
 
