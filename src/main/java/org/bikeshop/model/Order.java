@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -62,5 +64,10 @@ public class Order {
     private boolean isCalculated = false;
 
     @Column(nullable = false)
+    @Getter(AccessLevel.NONE)
     private boolean isPaid = false;
+
+    public boolean isPaid() {
+        return isPaid;
+    }
 }

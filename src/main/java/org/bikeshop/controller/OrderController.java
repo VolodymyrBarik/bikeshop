@@ -11,7 +11,6 @@ import org.bikeshop.service.OrderItemService;
 import org.bikeshop.service.OrderService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +32,8 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    @Operation(summary = "Returns all the orders",
-            description = "Returns list of all orders")
+    @Operation(summary = "Returns all the orders. Newest comes first",
+            description = "Returns list of all orders. Newest comes first")
     List<OrderListDto> getAll(Authentication authentication, Pageable pageable) {
         return orderService.findAll(pageable);
     }

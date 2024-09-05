@@ -16,5 +16,8 @@ public interface OrderMapper {
 
     @Mapping(source = "order.user.id", target = "userId")
     @Mapping(source = "order.currentStatus.name", target = "currentStatus")
+    @Mapping(source = "order.currentStatus.id", target = "statusId")
+    @Mapping(source = "order.orderDate", target = "orderDateTime")
+    @Mapping(target = "isPaid", expression = "java(order.isPaid())")
     OrderListDto toListDto(Order order);
 }

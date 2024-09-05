@@ -174,12 +174,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         Status statusNEWFromDb = statusRepository.findById(NEW_ORDER_STATUS)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find status with id 1"));
-        //orderStatusService.updateOrderStatus()
         order.setCurrentStatus(statusNEWFromDb);
         order.setUser(user);
         order.setShippingAddress(dto.getShippingAddress());
         order.setOrderDate(LocalDateTime.now());
-        //orderItems add to order
+        order.setPaid(false);
 
         BigDecimal totalPrice = getTotalPrice(shoppingCart.getCartItems());
         order.setTotal(totalPrice);

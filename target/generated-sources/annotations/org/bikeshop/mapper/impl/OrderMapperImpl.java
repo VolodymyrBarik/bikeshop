@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-25T20:53:00+0300",
+    date = "2024-09-05T21:41:05+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)"
 )
 @Component
@@ -68,6 +68,13 @@ public class OrderMapperImpl implements OrderMapper {
         if ( name != null ) {
             orderListDto.setCurrentStatus( name );
         }
+        Long id1 = orderCurrentStatusId( order );
+        if ( id1 != null ) {
+            orderListDto.setStatusId( id1 );
+        }
+        if ( order.getOrderDate() != null ) {
+            orderListDto.setOrderDateTime( order.getOrderDate() );
+        }
         if ( order.getId() != null ) {
             orderListDto.setId( order.getId() );
         }
@@ -75,6 +82,8 @@ public class OrderMapperImpl implements OrderMapper {
             orderListDto.setTotal( order.getTotal() );
         }
         orderListDto.setDeleted( order.isDeleted() );
+
+        orderListDto.setIsPaid( order.isPaid() );
 
         return orderListDto;
     }
@@ -138,5 +147,20 @@ public class OrderMapperImpl implements OrderMapper {
         }
 
         return set1;
+    }
+
+    private Long orderCurrentStatusId(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+        Status currentStatus = order.getCurrentStatus();
+        if ( currentStatus == null ) {
+            return null;
+        }
+        Long id = currentStatus.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 }
