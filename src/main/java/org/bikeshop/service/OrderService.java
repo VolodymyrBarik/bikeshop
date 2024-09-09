@@ -2,7 +2,6 @@ package org.bikeshop.service;
 
 import java.util.List;
 import org.bikeshop.dto.request.OrderRequestDto;
-import org.bikeshop.dto.request.OrderStatusRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
 import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
@@ -17,9 +16,11 @@ public interface OrderService {
 
     List<OrderListDto> findAll(Pageable pageable);
 
+    OrderResponseDto findById(Long orderId);
+
     void updateStatus(Long orderId, Long statusId);
 
-    void updateOrder(Long orderId, UpdateOrderRequestDto statusRequestDto);
+    void updateOrder(Long orderId, UpdateOrderRequestDto updateOrderRequestDto);
 
     Boolean checkWhetherTheresEnoughSCProductsInStock(ShoppingCart shoppingCart);
 }

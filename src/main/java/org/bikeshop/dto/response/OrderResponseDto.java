@@ -12,12 +12,15 @@ import lombok.Setter;
 public class OrderResponseDto {
     private Long id;
     private Long userId;
-    private Long statusId;
+    private String companyName;
+    private String user;
     private String currentStatus;
     private Set<OrderItemResponseDto> orderItems;
     private List<OrderStatusHistoryResponseDto> orderStatusHistory;
+    private String shippingAddress;
     private LocalDateTime orderDateTime;
+    private String additionalComment;
     private BigDecimal total;
     private Boolean isPaid;
-    private boolean isDeleted;
+    private Boolean isDeleted;
 }

@@ -76,6 +76,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrderResponseDto findById(Long orderId) {
+        Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Can't find order with id " + orderId));
+
+        return orderMapper.toDto(orderFromDb);
+    }
+
+    @Override
     public void updateStatus(Long orderId, Long statusId) {
         Status statusFromDb = statusRepository.findById(statusId).orElseThrow(() -> new NoSuchElementException(
                 "Can't find status with id " + statusId + " in order " + orderId));
@@ -105,49 +113,49 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(Long orderId, UpdateOrderRequestDto requestDto) {
+    public void updateOrder(Long orderId, UpdateOrderRequestDto updateOrderRequestDto) {
         Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order with id " + orderId));
-        if (requestDto.getUserId() != null && !Objects.equals(orderFromDb.getUser().getId(), requestDto.getUserId())) {
-            User user = userRepository.findById(requestDto.getUserId()).orElseThrow(
-                    () -> new EntityNotFoundException("Can't find user with id " + requestDto.getUserId()));
+        if (updateOrderRequestDto.getUserId() != null && !Objects.equals(orderFromDb.getUser().getId(), updateOrderRequestDto.getUserId())) {
+            User user = userRepository.findById(updateOrderRequestDto.getUserId()).orElseThrow(
+                    () -> new EntityNotFoundException("Can't find user with id " + updateOrderRequestDto.getUserId()));
             orderFromDb.setUser(user);
         }
 
-        if (requestDto.getStatusId() != null && !Objects.equals(
-                requestDto.getStatusId(), orderFromDb.getCurrentStatus().getId())) {
+        if (updateOrderRequestDto.getStatusId() != null && !Objects.equals(
+                updateOrderRequestDto.getStatusId(), orderFromDb.getCurrentStatus().getId())) {
 
-            updateStatus(orderId, requestDto.getStatusId());
+            updateStatus(orderId, updateOrderRequestDto.getStatusId());
         }
 
-        if (requestDto.getTotal() != null && !Objects.equals(orderFromDb.getTotal(), requestDto.getTotal())) {
-            orderFromDb.setTotal(requestDto.getTotal());
+        if (updateOrderRequestDto.getTotal() != null && !Objects.equals(orderFromDb.getTotal(), updateOrderRequestDto.getTotal())) {
+            orderFromDb.setTotal(updateOrderRequestDto.getTotal());
         }
 
-        if (requestDto.getShippingAddress() != null && !Objects.equals(
-                orderFromDb.getShippingAddress(), requestDto.getShippingAddress())) {
-            orderFromDb.setShippingAddress(requestDto.getShippingAddress());
+        if (updateOrderRequestDto.getShippingAddress() != null && !Objects.equals(
+                orderFromDb.getShippingAddress(), updateOrderRequestDto.getShippingAddress())) {
+            orderFromDb.setShippingAddress(updateOrderRequestDto.getShippingAddress());
         }
 
-        if (requestDto.getAdditionalComment() != null) {
-            orderFromDb.setAdditionalComment(requestDto.getAdditionalComment());
+        if (updateOrderRequestDto.getAdditionalComment() != null) {
+            orderFromDb.setAdditionalComment(updateOrderRequestDto.getAdditionalComment());
         }
 
-        orderFromDb.setCalculated(requestDto.isCalculated());
+        orderFromDb.setCalculated(updateOrderRequestDto.isCalculated());
 
-        if (requestDto.getIsPaid() != null) {
-            orderFromDb.setPaid(requestDto.getIsPaid());
+        if (updateOrderRequestDto.getIsPaid() != null) {
+            orderFromDb.setPaid(updateOrderRequestDto.getIsPaid());
         }
 
-        if (requestDto.getIsDeleted() != null) {
-            orderFromDb.setDeleted(requestDto.getIsDeleted());
+        if (updateOrderRequestDto.getIsDeleted() != null) {
+            orderFromDb.setDeleted(updateOrderRequestDto.getIsDeleted());
         }
 
         // Оновлення списку OrderItems
-        if (requestDto.getOrderItems() != null) {
+        if (updateOrderRequestDto.getOrderItems() != null) {
             // Видалення старих записів
             orderFromDb.getOrderItems().clear();
-            for (OrderItemResponseDto orderItemDto : requestDto.getOrderItems()) {
+            for (OrderItemResponseDto orderItemDto : updateOrderRequestDto.getOrderItems()) {
                 OrderItem orderItem = new OrderItem();
                 // Присвоєння властивостей orderItem на основі orderItemDto
                 orderItem.setOrder(orderFromDb);
@@ -156,10 +164,10 @@ public class OrderServiceImpl implements OrderService {
         }
         //update orderStatusHistory
         // Оновлення списку OrderStatusHistoryList
-        if (requestDto.getOrderStatusHistory() != null) {
+        if (updateOrderRequestDto.getOrderStatusHistory() != null) {
             // Видалення старих записів
             orderFromDb.getOrderStatusHistoryList().clear();
-            for (OrderStatusHistoryResponseDto statusHistoryDto : requestDto.getOrderStatusHistory()) {
+            for (OrderStatusHistoryResponseDto statusHistoryDto : updateOrderRequestDto.getOrderStatusHistory()) {
                 OrderStatusHistory statusHistory = new OrderStatusHistory();
                 // Присвоєння властивостей statusHistory на основі statusHistoryDto
                 statusHistory.setOrder(orderFromDb);
@@ -243,7 +251,7 @@ public class OrderServiceImpl implements OrderService {
         );
         responseDto.setOrderItems(orderItemsResponseDtoSet);
         responseDto.setUserId(orderFromDb.getUser().getId());
-        responseDto.setStatusId(orderFromDb.getCurrentStatus().getId());
+        //responseDto.setStatusId(orderFromDb.getCurrentStatus().getId());
         responseDto.setTotal(orderFromDb.getTotal());
         return responseDto;
     }
