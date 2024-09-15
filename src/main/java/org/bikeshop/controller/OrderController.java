@@ -1,17 +1,17 @@
 package org.bikeshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.bikeshop.dto.request.CreateCurrencyRequestDto;
 import org.bikeshop.dto.request.OrderRequestDto;
-import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
+import org.bikeshop.exception.EntityNotFoundException;
 import org.bikeshop.model.User;
 import org.bikeshop.service.OrderItemService;
 import org.bikeshop.service.OrderService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +48,27 @@ public class OrderController {
         return orderService.findAllByUser(user, pageable);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{orderId}")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Returns an order by its id",
             description = "Returns an order by its id")
-    OrderResponseDto getOrderById(@PathVariable Long id) {
-        return orderService.findById(id);
+    OrderResponseDto getOrderById(@PathVariable Long orderId) {
+        return orderService.findById(orderId);
     }
+
+    @GetMapping("/{userId}/{orderId}")
+    @Operation(summary = "Returns an order by its id, only if it belongs to that user",
+            description = "Returns an order by its id, checks if orderId belongs to userId")
+    OrderResponseDto getOrderByIdForUserId(Authentication authentication, @PathVariable Long orderId) {
+        User user = (User) authentication.getPrincipal();
+        Pageable defaultPageable = PageRequest.of(0, 10, Sort.by("id").ascending());
+        return orderService.findAllByUser(user, defaultPageable).stream()
+                .filter(order -> order.getId().equals(orderId))
+                .findFirst()
+                .map(order -> orderService.findById(orderId))
+                .orElseThrow(() -> new EntityNotFoundException("You don't have an order with id " + orderId));
+    }
+
 
 //    @PutMapping("/{id}")
 //    @Operation(summary = "Updates an order by id",

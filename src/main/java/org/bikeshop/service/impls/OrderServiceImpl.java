@@ -79,7 +79,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto findById(Long orderId) {
         Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order with id " + orderId));
-
         return orderMapper.toDto(orderFromDb);
     }
 
