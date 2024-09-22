@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-role-admin
+      author: VolodymyrBarasiuk
+      changes:
+        - update:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: ROLE_ADMIN
+            where: "role_name = 'ADMIN'"

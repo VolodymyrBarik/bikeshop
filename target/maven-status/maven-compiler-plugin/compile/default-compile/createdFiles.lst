@@ -57,6 +57,7 @@ org\bikeshop\controller\CategoryController.class
 org\bikeshop\repository\StatusRepository.class
 org\bikeshop\mapper\CurrencyMapper.class
 org\bikeshop\service\CurrencyService.class
+org\bikeshop\controller\AdminOrderController.class
 org\bikeshop\dto\request\CreateProductRequestDto.class
 org\bikeshop\mapper\BrandMapper.class
 org\bikeshop\mapper\OrderStatusHistoryMapper.class
@@ -94,6 +95,7 @@ org\bikeshop\controller\StatusController.class
 org\bikeshop\dto\request\UserLoginRequestDto.class
 org\bikeshop\mapper\impl\OrderStatusHistoryMapperImpl.class
 org\bikeshop\service\impls\BrandServiceImpl.class
+org\bikeshop\controller\UserOrderController.class
 org\bikeshop\model\User.class
 org\bikeshop\controller\ProductController.class
 org\bikeshop\dto\response\CartItemResponseDto.class
@@ -108,11 +110,11 @@ org\bikeshop\dto\response\UserLoginResponseDto.class
 org\bikeshop\model\OrderStatusHistory.class
 org\bikeshop\service\CategoryService.class
 org\bikeshop\mapper\ShoppingCartMapper.class
-org\bikeshop\controller\OrderController.class
 org\bikeshop\validation\FieldMatchValidator.class
 org\bikeshop\mapper\CategoryMapper.class
 org\bikeshop\repository\product\BrandSpecificationProvider.class
 org\bikeshop\repository\OrderItemRepository.class
+org\bikeshop\dto\response\OrderListDto.class
 org\bikeshop\model\ShoppingCart.class
 org\bikeshop\config\SecurityConfig.class
 org\bikeshop\dto\request\ExchangeRateRequestDto.class

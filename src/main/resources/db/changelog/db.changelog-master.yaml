@@ -39,3 +39,4 @@ databaseChangeLog:
       file: db/changelog/changes/19-update-cart_items-drop-column-is_deleted.yaml
   - include:
       file: db/changelog/changes/20-update-table-orders-remove-column-are_goods_written_off.yaml
+

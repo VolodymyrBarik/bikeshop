@@ -11,9 +11,9 @@ import org.bikeshop.service.OrderService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,14 +22,16 @@ import java.util.List;
 public class UserOrderController {
     private final OrderService orderService;
 
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_WHOLESALE_USER')")
     @PostMapping
-    @Operation(summary = "Create a new order", description = "Create a new order")
+    @Operation(summary = "Create a new order for a user", description = "Create a new order")
     OrderResponseDto create(@RequestBody OrderRequestDto requestDto,
                             Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return orderService.create(user, requestDto);
     }
 
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_WHOLESALE_USER')")
     @GetMapping
     @Operation(summary = "Returns all the orders belongs to user. Newest comes first",
             description = "Returns list of orders belongs to user. Newest comes first")
@@ -38,6 +40,7 @@ public class UserOrderController {
         return orderService.findAllByUser(user, pageable);
     }
 
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_WHOLESALE_USER')")
     @GetMapping("/{orderId}")
     @Operation(summary = "Returns an order by its id, only if it belongs to that user",
             description = "Returns an order by its id, checks if orderId belongs to userId")
