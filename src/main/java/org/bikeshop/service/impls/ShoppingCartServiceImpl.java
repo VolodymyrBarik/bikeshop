@@ -1,5 +1,8 @@
 package org.bikeshop.service.impls;
 
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.response.ShoppingCartResponseDto;
 import org.bikeshop.exception.EntityNotFoundException;
@@ -24,6 +27,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartResponseDto get(User user) {
         ShoppingCart shoppingCart = findOrCreateNewShoppingCart(user);
+        List<CartItem> cartItemsSortedByAddedDateTime = shoppingCart.getCartItems().stream()
+                .sorted(Comparator.comparing(CartItem::getAddedAt))
+                .toList();
+
+        shoppingCart.setCartItems(cartItemsSortedByAddedDateTime);
         shoppingCart.setUser(user);
         return shoppingCartMapper.toDto(shoppingCart);
     }

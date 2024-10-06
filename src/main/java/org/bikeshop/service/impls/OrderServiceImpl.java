@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -79,6 +78,12 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto findById(Long orderId) {
         Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order with id " + orderId));
+
+//        Set<OrderItem> sortedOrderItems = orderFromDb.getOrderItems().stream()
+//                .sorted(Comparator.comparing(OrderItem::getId))
+//                .collect(Collectors.toCollection(LinkedHashSet::new));
+//
+//        orderFromDb.setOrderItems(sortedOrderItems);
         return orderMapper.toDto(orderFromDb);
     }
 
@@ -96,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
 
     public Boolean checkWhetherTheresEnoughSCProductsInStock(ShoppingCart shoppingCart)
             throws InsufficientProductQuantityException {
-        Set<CartItem> cartItems = shoppingCart.getCartItems();
+        List<CartItem> cartItems = shoppingCart.getCartItems();
         for (CartItem item : cartItems) {
             Product productFromDb =
                     productRepository.findById(item.getProduct().getId()).orElseThrow(
@@ -195,7 +200,7 @@ public class OrderServiceImpl implements OrderService {
                 () -> new EntityNotFoundException("Can't find order with id " + savedToDb.getId()));
     }
 
-    private BigDecimal getTotalPrice(Set<CartItem> items) {
+    private BigDecimal getTotalPrice(List<CartItem> items) {
         return items.stream()
                 .mapToDouble(cartItem -> cartItem.getProduct().getPriceUah().doubleValue()
                         * cartItem.getQuantity())
@@ -208,7 +213,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void createOrderItems(ShoppingCart shoppingCart, Order orderFromDb) {
-        Set<CartItem> cartItems = shoppingCart.getCartItems();
+        List<CartItem> cartItems = shoppingCart.getCartItems();
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = parseCartItemIntoOrderItem(orderFromDb, cartItem);
             orderItemRepository.save(orderItem);
@@ -287,7 +292,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 "Can't find user shopping cart with user id " + user.getId()));
-        Set<CartItem> cartItems = shoppingCart.getCartItems();
+        List<CartItem> cartItems = shoppingCart.getCartItems();
         cartItemRepository.deleteAll(cartItems);
     }
 }

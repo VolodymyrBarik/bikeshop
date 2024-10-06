@@ -1,5 +1,6 @@
 package org.bikeshop.model;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,4 +30,6 @@ public class CartItem {
     @Column(nullable = false)
     @Min(0)
     private int quantity;
+    @Column(nullable = false)
+    private LocalDateTime addedAt;
 }

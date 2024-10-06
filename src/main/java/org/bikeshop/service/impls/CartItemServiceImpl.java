@@ -24,14 +24,15 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public CartItem create(CartItemRequestDto requestDto, User user) {
-        if (searchIfCartItemExist(requestDto, user).getId() != null) {
-            return searchIfCartItemExist(requestDto, user);
+        if (searchIfCartItemExistOrElseCreate(requestDto, user).getId() != null) {
+            return searchIfCartItemExistOrElseCreate(requestDto, user);
         }
         Product productFromDb = productRepository.findById(requestDto.getProductId()).orElseThrow(
                 () -> new EntityNotFoundException("Can't find product with id "
                         + requestDto.getProductId()));
-        CartItem cartItem = searchIfCartItemExist(requestDto, user);
+        CartItem cartItem = searchIfCartItemExistOrElseCreate(requestDto, user);
         cartItem.setProduct(productFromDb);
+        cartItem.setAddedAt(java.time.LocalDateTime.now());
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setId(user.getId());
         cartItem.setShoppingCart(shoppingCart);
@@ -39,7 +40,7 @@ public class CartItemServiceImpl implements CartItemService {
         return cartItemRepository.save(cartItem);
     }
 
-    private CartItem searchIfCartItemExist(CartItemRequestDto requestDto, User user) {
+    private CartItem searchIfCartItemExistOrElseCreate(CartItemRequestDto requestDto, User user) {
         ShoppingCartResponseDto shoppingCartResponseDto =
                 shoppingCartService.get(user);
         Optional<CartItem> byShoppingCartIdAndProductId =
