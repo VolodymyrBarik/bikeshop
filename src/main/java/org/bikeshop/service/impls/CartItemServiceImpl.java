@@ -1,5 +1,6 @@
 package org.bikeshop.service.impls;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.CartItemRequestDto;
@@ -24,15 +25,16 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public CartItem create(CartItemRequestDto requestDto, User user) {
-        if (searchIfCartItemExistOrElseCreate(requestDto, user).getId() != null) {
-            return searchIfCartItemExistOrElseCreate(requestDto, user);
+        CartItem existingCartItem = searchIfCartItemExistOrElseCreate(requestDto, user);
+        if (existingCartItem.getId() != null) {
+            return existingCartItem;
         }
         Product productFromDb = productRepository.findById(requestDto.getProductId()).orElseThrow(
                 () -> new EntityNotFoundException("Can't find product with id "
                         + requestDto.getProductId()));
         CartItem cartItem = searchIfCartItemExistOrElseCreate(requestDto, user);
         cartItem.setProduct(productFromDb);
-        cartItem.setAddedAt(java.time.LocalDateTime.now());
+        cartItem.setAddedAt(LocalDateTime.now());
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setId(user.getId());
         cartItem.setShoppingCart(shoppingCart);
@@ -48,7 +50,7 @@ public class CartItemServiceImpl implements CartItemService {
                         shoppingCartResponseDto.getId(), requestDto.getProductId());
         if (byShoppingCartIdAndProductId.isPresent()) {
             CartItem cartItem = byShoppingCartIdAndProductId.get();
-            cartItem.setQuantity(requestDto.getQuantity());
+            cartItem.setQuantity(cartItem.getQuantity() +  requestDto.getQuantity());
             return cartItemRepository.save(cartItem);
         }
         return new CartItem();
