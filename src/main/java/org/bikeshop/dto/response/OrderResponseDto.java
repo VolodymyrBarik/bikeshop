@@ -23,4 +23,5 @@ public class OrderResponseDto {
     private BigDecimal total;
     private Boolean isPaid;
     private Boolean isDeleted;
+    private LocalDateTime createdAt;
 }

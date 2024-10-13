@@ -78,12 +78,11 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto findById(Long orderId) {
         Order orderFromDb = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order with id " + orderId));
+        List<OrderItem> orderItemsSortedByTimeAdded = orderFromDb.getOrderItems().stream()
+                .sorted(Comparator.comparing(OrderItem::getQuantity))
+                .toList();
 
-//        Set<OrderItem> sortedOrderItems = orderFromDb.getOrderItems().stream()
-//                .sorted(Comparator.comparing(OrderItem::getId))
-//                .collect(Collectors.toCollection(LinkedHashSet::new));
-//
-//        orderFromDb.setOrderItems(sortedOrderItems);
+        orderFromDb.setOrderItems(orderItemsSortedByTimeAdded);
         return orderMapper.toDto(orderFromDb);
     }
 
@@ -178,7 +177,6 @@ public class OrderServiceImpl implements OrderService {
                 orderFromDb.getOrderStatusHistoryList().add(statusHistory);
             }
         }
-
         orderRepository.save(orderFromDb);
     }
 
@@ -224,6 +222,7 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderItem parseCartItemIntoOrderItem(Order order, CartItem cartItem) {
         OrderItem orderItem = new OrderItem();
+        orderItem.setAddedAt(cartItem.getAddedAt());
         orderItem.setOrder(order);
         orderItem.setProduct(cartItem.getProduct());
         orderItem.setQuantity(cartItem.getQuantity());

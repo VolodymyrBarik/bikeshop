@@ -12,6 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,9 +35,13 @@ public class OrderItem {
     private Product product;
 
     @Column(nullable = false)
+    @Min(0)
     private int quantity;
 
     @Column(nullable = false)
     @Min(0)
     private BigDecimal price;
+
+    @Column(nullable = false)
+    private LocalDateTime addedAt;
 }

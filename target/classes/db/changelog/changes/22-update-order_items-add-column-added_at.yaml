@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: remove_is_deleted_from_cart_items
+      author: Volodymyr_Barasiuk
+      changes:
+        - addColumn:
+            tableName: order_items
+            columns:
+              - column:
+                  name: added_at
+                  type: timestamp
+                  constraints:
+                    nullable: false

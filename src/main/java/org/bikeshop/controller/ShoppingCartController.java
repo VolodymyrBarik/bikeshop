@@ -2,6 +2,7 @@ package org.bikeshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.CartItemQuantityDto;
 import org.bikeshop.dto.request.CartItemRequestDto;
@@ -41,7 +42,7 @@ public class ShoppingCartController {
             description = "Adds product to a shopping cart")
     @PostMapping
     public ShoppingCartResponseDto addProduct(
-            @RequestBody CartItemRequestDto requestDto, Authentication authentication) {
+            @Valid @RequestBody CartItemRequestDto requestDto, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         cartItemService.create(requestDto, user);
         return shoppingCartService.get(user);
@@ -51,7 +52,7 @@ public class ShoppingCartController {
             description = "Changes the quantity of the items that are already in the shopping cart")
     @PutMapping("/cart-items/{cartItemId}")
     public ShoppingCartResponseDto update(@PathVariable Long cartItemId,
-                                          @RequestBody CartItemQuantityDto dto,
+                                          @Valid @RequestBody CartItemQuantityDto dto,
                                           Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return shoppingCartService.update(user, cartItemId, dto.getQuantity());

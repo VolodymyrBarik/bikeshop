@@ -50,9 +50,13 @@ public class CartItemServiceImpl implements CartItemService {
                         shoppingCartResponseDto.getId(), requestDto.getProductId());
         if (byShoppingCartIdAndProductId.isPresent()) {
             CartItem cartItem = byShoppingCartIdAndProductId.get();
-            cartItem.setQuantity(cartItem.getQuantity() +  requestDto.getQuantity());
-            return cartItemRepository.save(cartItem);
+            return updateQuantityOfItem(cartItem, requestDto);
         }
         return new CartItem();
+    }
+
+    private CartItem updateQuantityOfItem(CartItem cartItem, CartItemRequestDto requestDto) {
+        cartItem.setQuantity(cartItem.getQuantity() + requestDto.getQuantity());
+        return cartItemRepository.save(cartItem);
     }
 }

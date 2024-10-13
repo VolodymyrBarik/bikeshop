@@ -22,14 +22,18 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
+
     @Column(nullable = false)
     @Min(0)
     private int quantity;
+
     @Column(nullable = false)
     private LocalDateTime addedAt;
 }
