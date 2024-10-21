@@ -1,6 +1,7 @@
 package org.bikeshop.service.impls;
 
 import lombok.RequiredArgsConstructor;
+import org.bikeshop.dto.request.OrderItemRequestDto;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
@@ -158,7 +159,8 @@ public class OrderServiceImpl implements OrderService {
         if (updateOrderRequestDto.getOrderItems() != null) {
             // Видалення старих записів
             orderFromDb.getOrderItems().clear();
-            for (OrderItemResponseDto orderItemDto : updateOrderRequestDto.getOrderItems()) {
+            //for (OrderItemResponseDto orderItemDto : updateOrderRequestDto.getOrderItems()) {
+            for (OrderItemRequestDto orderItemDto : updateOrderRequestDto.getOrderItems()) {
                 OrderItem orderItem = new OrderItem();
                 // Присвоєння властивостей orderItem на основі orderItemDto
                 orderItem.setOrder(orderFromDb);

@@ -54,13 +54,20 @@ public class AdminOrderController {
     }
 
     @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+    @PutMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @Operation(summary = "Update order status", description = "Updates order status by admin")
+    void updateStatus(@PathVariable Long orderId, @RequestBody Long statusId) {
+        orderService.updateStatus(orderId, statusId);
+    }
+
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Updates an order by id", description = "Updates an order by id")
     public void update(@PathVariable Long id,
                        @RequestBody UpdateOrderRequestDto requestDto) {
         orderService.updateOrder(id, requestDto);
     }
-
 
 //    @GetMapping("/{orderId}/items")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -72,7 +79,7 @@ public class AdminOrderController {
 //        return orderItemService.getOrderItemByOrderId(orderId, user);
 //    }
 
-//    @GetMapping("/{orderId}/items/{orderItemId}")
+    //    @GetMapping("/{orderId}/items/{orderItemId}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
 //    @Operation(summary = "Returns certain orderItem from the certain order",
 //            description = "Returns certain orderItem from the certain order that belongs to user")
@@ -83,11 +90,4 @@ public class AdminOrderController {
 //        return orderItemService.getItemFromOrder(orderId, user, orderItemId);
 //    }
 
-    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
-    @PutMapping("/{orderId}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @Operation(summary = "Update order status", description = "Updates order status by admin")
-    void updateStatus(@PathVariable Long orderId, @RequestBody Long statusId) {
-        orderService.updateStatus(orderId, statusId);
-    }
 }

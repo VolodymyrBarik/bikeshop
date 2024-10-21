@@ -28,6 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final ShoppingCartSupplier shoppingCartSupplier;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     public UserLoginResponseDto authenticate(UserLoginRequestDto request) {
@@ -55,5 +56,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User userFromDb = userRepository.save(user);
         shoppingCartSupplier.createShoppingCart(userFromDb);
         return userMapper.toDto(userFromDb);
+    }
+
+    @Override
+    public void logout(String token) {
+        tokenBlacklistService.addToBlacklist(token);
     }
 }

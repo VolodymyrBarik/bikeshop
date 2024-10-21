@@ -11,4 +11,6 @@ public interface AuthenticationService {
 
     UserResponseDto register(UserRegistrationRequestDto requestDto) throws
             RegistrationException;
+
+    void logout(String token);
 }
