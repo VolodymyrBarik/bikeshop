@@ -1,7 +1,7 @@
 package org.bikeshop.controller;
 
-import java.util.List;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
@@ -69,25 +69,26 @@ public class AdminOrderController {
         orderService.updateOrder(id, requestDto);
     }
 
-//    @GetMapping("/{orderId}/items")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @Operation(summary = "Returns all the items belongs to order",
-//            description = "Returns list of orderItems that certain order contains")
-//    List<OrderItemResponseDto> getAllItemsFromOrder(
-//            @PathVariable Long orderId, Authentication authentication) {
-//        User user = (User) authentication.getPrincipal();
-//        return orderItemService.getOrderItemByOrderId(orderId, user);
-//    }
+    //    @GetMapping("/{orderId}/items")
+    //    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //    @Operation(summary = "Returns all the items belongs to order",
+    //            description = "Returns list of orderItems that certain order contains")
+    //    List<OrderItemResponseDto> getAllItemsFromOrder(
+    //            @PathVariable Long orderId, Authentication authentication) {
+    //        User user = (User) authentication.getPrincipal();
+    //        return orderItemService.getOrderItemByOrderId(orderId, user);
+    //    }
 
     //    @GetMapping("/{orderId}/items/{orderItemId}")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @Operation(summary = "Returns certain orderItem from the certain order",
-//            description = "Returns certain orderItem from the certain order that belongs to user")
-//    OrderItemResponseDto getItemFromOrder(
-//            @PathVariable Long orderId, @PathVariable Long orderItemId,
-//            Authentication authentication) {
-//        User user = (User) authentication.getPrincipal();
-//        return orderItemService.getItemFromOrder(orderId, user, orderItemId);
-//    }
+    //    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //    @Operation(summary = "Returns certain orderItem from the certain order",
+    //            description = "Returns certain orderItem from the certain order
+    //            that belongs to user")
+    //    OrderItemResponseDto getItemFromOrder(
+    //            @PathVariable Long orderId, @PathVariable Long orderItemId,
+    //            Authentication authentication) {
+    //        User user = (User) authentication.getPrincipal();
+    //        return orderItemService.getItemFromOrder(orderId, user, orderItemId);
+    //    }
 
 }

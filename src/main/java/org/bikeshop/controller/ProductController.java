@@ -1,10 +1,8 @@
 package org.bikeshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
-
 import java.util.List;
-
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.ProductSearchParameters;
 import org.bikeshop.dto.request.CreateProductRequestDto;
@@ -12,7 +10,16 @@ import org.bikeshop.dto.response.product.ProductResponseDto;
 import org.bikeshop.service.ProductService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +34,8 @@ public class ProductController {
         return productService.save(requestDto);
     }
 
-    @Operation(summary = "Get all enabled products", description = "Get a list of all enabled available products")
+    @Operation(summary = "Get all enabled products",
+            description = "Get a list of all enabled available products")
     @GetMapping
     public List<ProductResponseDto> getAll(Pageable pageable) {
         return productService.findAllEnabled(pageable);
@@ -42,7 +50,8 @@ public class ProductController {
         productService.update(id, requestDto);
     }
 
-    @Operation(summary = "Get all products including disabled", description = "Get all products including disabled")
+    @Operation(summary = "Get all products including disabled",
+            description = "Get all products including disabled")
     @GetMapping("/all")
     public List<ProductResponseDto> getAllIncludingDisabled(Pageable pageable) {
         return productService.findAllIncludingDisabled(pageable);

@@ -12,6 +12,7 @@ C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impl
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\BrandController.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\response\OrderStatusHistoryResponseDto.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\CategoryServiceImpl.java
+C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\OrderItemRequestDto.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\OrderServiceImpl.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\exception\EntityNotFoundException.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\repository\StatusRepository.java
@@ -69,6 +70,7 @@ C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\response
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\CreateCurrencyRequestDto.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\response\BrandResponseDto.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\OrderItem.java
+C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\security\TokenBlacklistService.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\security\AuthenticationServiceImpl.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\AuthenticationController.java
 C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\response\StatusResponseDto.java

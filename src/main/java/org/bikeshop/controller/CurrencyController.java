@@ -61,7 +61,8 @@ public class CurrencyController {
         currencyService.update(id, requestDto);
     }
 
-    @Operation(summary = "Update an exchange rate", description = "Updates a currency exchange rate")
+    @Operation(summary = "Update an exchange rate",
+            description = "Updates a currency exchange rate")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("rates/{id}")
     public void update(@PathVariable Long id,

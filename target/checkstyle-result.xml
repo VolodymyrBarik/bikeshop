@@ -7,30 +7,21 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\config\SecurityConfig.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\AdminOrderController.java">
-<error line="4" column="1" severity="error" message="Wrong lexicographical order for &apos;io.swagger.v3.oas.annotations.Operation&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="84" column="1" severity="error" message="Comment has incorrect indentation level 0, expected is 4, indentation should be the same level as line 86." source="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\AuthenticationController.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\BrandController.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\CategoryController.java">
-<error line="21" column="1" severity="error" message="Wrong lexicographical order for &apos;org.springframework.data.domain.Pageable&apos; import. Should be before &apos;org.springframework.web.bind.annotation.RestController&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\CurrencyController.java">
-<error line="64" severity="error" message="Line is longer than 100 characters (found 101)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\ProductController.java">
-<error line="6" column="1" severity="error" message="Extra separation in import group before &apos;java.util.List&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="8" column="1" severity="error" message="Extra separation in import group before &apos;lombok.RequiredArgsConstructor&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="15" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="30" severity="error" message="Line is longer than 100 characters (found 114)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="45" severity="error" message="Line is longer than 100 characters (found 116)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="5" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.validation.Valid&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\ShoppingCartController.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\StatusController.java">
-<error line="12" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\controller\UserOrderController.java">
 <error line="16" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
@@ -56,6 +47,8 @@
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\ExchangeRateRequestDto.java">
 </file>
+<file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\OrderItemRequestDto.java">
+</file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\OrderRequestDto.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\OrderStatusRequestDto.java">
@@ -63,9 +56,6 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\StatusRequestDto.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\UpdateOrderRequestDto.java">
-<error line="7" column="1" severity="error" message="Wrong lexicographical order for &apos;java.math.BigDecimal&apos; import. Should be before &apos;org.bikeshop.dto.response.OrderStatusHistoryResponseDto&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="8" column="1" severity="error" message="Wrong lexicographical order for &apos;java.util.List&apos; import. Should be before &apos;org.bikeshop.dto.response.OrderStatusHistoryResponseDto&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="9" column="1" severity="error" message="Wrong lexicographical order for &apos;java.util.Set&apos; import. Should be before &apos;org.bikeshop.dto.response.OrderStatusHistoryResponseDto&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\dto\request\UserLoginRequestDto.java">
 </file>
@@ -133,13 +123,33 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\Brand.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\CartItem.java">
+<error line="4" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Column&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="5" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Entity&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="6" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.FetchType&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="7" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.GeneratedValue&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="8" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.GenerationType&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="9" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Id&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="10" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.JoinColumn&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="11" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.ManyToOne&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="12" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Table&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="13" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.validation.constraints.Min&apos; import. Should be before &apos;java.time.LocalDateTime&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\Category.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\Currency.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\Order.java">
-<error line="21" column="1" severity="error" message="Extra separation in import group before &apos;lombok.AccessLevel&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="7" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.CascadeType&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="8" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Column&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="9" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Entity&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="10" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.FetchType&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="11" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.GeneratedValue&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="12" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.GenerationType&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="13" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Id&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="14" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.JoinColumn&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="15" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.ManyToOne&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="16" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.OneToMany&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="17" column="1" severity="error" message="Wrong lexicographical order for &apos;jakarta.persistence.Table&apos; import. Should be before &apos;java.util.List&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\OrderItem.java">
 </file>
@@ -153,6 +163,7 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\Role.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\ShoppingCart.java">
+<error line="14" column="8" severity="error" message="Unused import - java.util.Set." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\model\Status.java">
 </file>
@@ -210,8 +221,13 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\security\CustomUserDetailsService.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\security\JwtAuthenticationFilter.java">
+<error line="27" severity="error" message="Line is longer than 100 characters (found 101)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="45" column="1" severity="error" message="Comment has incorrect indentation level 0, expected is 4, indentation should be the same level as line 47." source="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\security\JwtUtil.java">
+</file>
+<file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\security\TokenBlacklistService.java">
+<error line="1" severity="error" message="File does not end with a newline." source="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\BrandService.java">
 </file>
@@ -232,9 +248,8 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\OrderItemServiceImpl.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\OrderServiceImpl.java">
-<error line="14" column="26" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.bikeshop.model.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="15" column="31" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.bikeshop.repository.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="25" column="1" severity="error" message="Extra separation in import group before &apos;java.math.BigDecimal&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="15" column="26" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.bikeshop.model.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="16" column="31" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.bikeshop.repository.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 <error line="25" column="1" severity="error" message="Wrong lexicographical order for &apos;java.math.BigDecimal&apos; import. Should be before &apos;org.springframework.stereotype.Service&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 <error line="26" column="1" severity="error" message="Wrong lexicographical order for &apos;java.time.LocalDateTime&apos; import. Should be before &apos;org.springframework.stereotype.Service&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
 <error line="27" column="1" severity="error" message="Wrong lexicographical order for &apos;java.util.*&apos; import. Should be before &apos;org.springframework.stereotype.Service&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
@@ -244,20 +259,20 @@
 <error line="60" severity="error" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 <error line="61" severity="error" message="Line is longer than 100 characters (found 101)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 <error line="70" severity="error" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="87" severity="error" message="Line is longer than 100 characters (found 111)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="92" severity="error" message="Line is longer than 100 characters (found 124)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="97" column="20" severity="error" message="Abbreviation in name &apos;checkWhetherTheresEnoughSCProductsInStock&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
-<error line="107" column="91" severity="error" message="&apos;+&apos; should be on a new line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck"/>
-<error line="118" severity="error" message="Line is longer than 100 characters (found 141)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="120" severity="error" message="Line is longer than 100 characters (found 119)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="130" severity="error" message="Line is longer than 100 characters (found 132)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="169" severity="error" message="Line is longer than 100 characters (found 114)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="182" column="16" severity="error" message="Abbreviation in name &apos;statusNEWFromDb&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
-<error line="243" severity="error" message="Line is longer than 100 characters (found 111)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="247" severity="error" message="Line is longer than 100 characters (found 115)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="267" column="85" severity="error" message="&apos;+&apos; should be on a new line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck"/>
-<error line="268" column="82" severity="error" message="&apos;+&apos; should be on a new line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck"/>
-<error line="278" severity="error" message="Line is longer than 100 characters (found 154)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="92" severity="error" message="Line is longer than 100 characters (found 111)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="97" severity="error" message="Line is longer than 100 characters (found 124)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="102" column="20" severity="error" message="Abbreviation in name &apos;checkWhetherTheresEnoughSCProductsInStock&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
+<error line="112" column="91" severity="error" message="&apos;+&apos; should be on a new line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck"/>
+<error line="123" severity="error" message="Line is longer than 100 characters (found 141)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="125" severity="error" message="Line is longer than 100 characters (found 119)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="135" severity="error" message="Line is longer than 100 characters (found 132)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="175" severity="error" message="Line is longer than 100 characters (found 114)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="187" column="16" severity="error" message="Abbreviation in name &apos;statusNEWFromDb&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
+<error line="249" severity="error" message="Line is longer than 100 characters (found 111)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="253" severity="error" message="Line is longer than 100 characters (found 115)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="273" column="85" severity="error" message="&apos;+&apos; should be on a new line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck"/>
+<error line="274" column="82" severity="error" message="&apos;+&apos; should be on a new line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck"/>
+<error line="284" severity="error" message="Line is longer than 100 characters (found 154)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\OrderStatusHistoryServiceImpl.java">
 <error line="7" column="1" severity="error" message="Extra separation in import group before &apos;lombok.RequiredArgsConstructor&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
@@ -269,6 +284,7 @@
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\RoleServiceImpl.java">
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\ShoppingCartServiceImpl.java">
+<error line="4" column="8" severity="error" message="Unused import - java.util.LinkedHashSet." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
 </file>
 <file name="C:\Users\Volodymyr\IdeaProjects\bikeshop\src\main\java\org\bikeshop\service\impls\ShoppingCartSupplierImpl.java">
 </file>

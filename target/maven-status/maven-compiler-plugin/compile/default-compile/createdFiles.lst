@@ -45,6 +45,7 @@ org\bikeshop\repository\SpecificationBuilder.class
 org\bikeshop\dto\response\OrderStatusHistoryResponseDto.class
 org\bikeshop\mapper\ProductMapper.class
 org\bikeshop\mapper\impl\OrderItemMapperImpl.class
+org\bikeshop\security\TokenBlacklistService.class
 org\bikeshop\dto\request\CreateCategoryRequestDto.class
 org\bikeshop\exception\InsufficientProductQuantityException.class
 org\bikeshop\dto\request\OrderRequestDto.class
@@ -80,6 +81,7 @@ org\bikeshop\security\AuthenticationService.class
 org\bikeshop\dto\request\OrderStatusRequestDto.class
 org\bikeshop\dto\response\BrandResponseDto.class
 org\bikeshop\model\Currency.class
+org\bikeshop\dto\request\OrderItemRequestDto.class
 org\bikeshop\model\Role.class
 org\bikeshop\dto\request\UpdateOrderRequestDto.class
 org\bikeshop\dto\request\CartItemRequestDto.class
