@@ -1,16 +1,17 @@
-package org.bikeshop.repository;
+package org.bikeshop.repository.order;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.bikeshop.model.Order;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long>,
+        JpaSpecificationExecutor<Order> {
     @EntityGraph(attributePaths = {"orderItems", "orderItems.product", "currentStatus"})
     List<Order> findAllByUserId(Long userId, Pageable pageable);
 

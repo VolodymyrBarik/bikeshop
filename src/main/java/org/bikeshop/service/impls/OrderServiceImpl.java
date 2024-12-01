@@ -14,6 +14,7 @@ import org.bikeshop.mapper.OrderItemMapper;
 import org.bikeshop.mapper.OrderMapper;
 import org.bikeshop.model.*;
 import org.bikeshop.repository.*;
+import org.bikeshop.repository.order.OrderRepository;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.service.OrderService;
 import org.bikeshop.service.OrderStatusHistoryService;

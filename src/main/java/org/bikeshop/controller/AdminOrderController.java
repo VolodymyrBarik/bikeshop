@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
+import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.model.User;
@@ -69,15 +70,15 @@ public class AdminOrderController {
         orderService.updateOrder(id, requestDto);
     }
 
-    //    @GetMapping("/{orderId}/items")
-    //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    //    @Operation(summary = "Returns all the items belongs to order",
-    //            description = "Returns list of orderItems that certain order contains")
-    //    List<OrderItemResponseDto> getAllItemsFromOrder(
-    //            @PathVariable Long orderId, Authentication authentication) {
-    //        User user = (User) authentication.getPrincipal();
-    //        return orderItemService.getOrderItemByOrderId(orderId, user);
-    //    }
+        @GetMapping("/{orderId}/items")
+        @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+        @Operation(summary = "Returns all the items belongs to order",
+                description = "Returns list of orderItems that certain order contains")
+        List<OrderItemResponseDto> getAllItemsFromOrder(
+                @PathVariable Long orderId, Authentication authentication) {
+            User user = (User) authentication.getPrincipal();
+            return orderItemService.getOrderItemByOrderId(orderId, user);
+        }
 
     //    @GetMapping("/{orderId}/items/{orderItemId}")
     //    @PreAuthorize("hasRole('ROLE_ADMIN')")

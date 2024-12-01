@@ -9,7 +9,7 @@ import org.bikeshop.model.Order;
 import org.bikeshop.model.OrderItem;
 import org.bikeshop.model.User;
 import org.bikeshop.repository.OrderItemRepository;
-import org.bikeshop.repository.OrderRepository;
+import org.bikeshop.repository.order.OrderRepository;
 import org.bikeshop.service.OrderItemService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

@@ -9,10 +9,6 @@ import org.springframework.lang.NonNull;
 
 public interface StatusRepository extends JpaRepository<Status, Long> {
 
-//    @Override
-//    @NonNull
-//    Page<Status> findAllByUser(@NonNull Pageable pageable);
-
     @Query("SELECT DISTINCT s FROM Status s WHERE s.isDeleted = false AND s.isActive")
     Page<Status> findAllActiveNonDeleted(@NonNull Pageable pageable);
 }
