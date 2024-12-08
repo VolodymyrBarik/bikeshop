@@ -3,12 +3,14 @@ package org.bikeshop.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.bikeshop.dto.OrderSearchParameters;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
 import org.bikeshop.dto.response.OrderItemResponseDto;
 import org.bikeshop.dto.response.OrderListDto;
 import org.bikeshop.dto.response.OrderResponseDto;
 import org.bikeshop.model.User;
+import org.bikeshop.service.OrderItemService;
 import org.bikeshop.service.OrderService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("admin/orders")
 public class AdminOrderController {
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
     @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
     @PostMapping
@@ -70,15 +73,22 @@ public class AdminOrderController {
         orderService.updateOrder(id, requestDto);
     }
 
-        @GetMapping("/{orderId}/items")
-        @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
-        @Operation(summary = "Returns all the items belongs to order",
-                description = "Returns list of orderItems that certain order contains")
-        List<OrderItemResponseDto> getAllItemsFromOrder(
-                @PathVariable Long orderId, Authentication authentication) {
-            User user = (User) authentication.getPrincipal();
-            return orderItemService.getOrderItemByOrderId(orderId, user);
-        }
+    @GetMapping("/{orderId}/items")
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Returns all the items belongs to order",
+            description = "Returns list of orderItems that certain order contains")
+    List<OrderItemResponseDto> getAllItemsFromOrder(
+            @PathVariable Long orderId, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return orderItemService.getOrderItemByOrderId(orderId, user);
+    }
+
+    @Operation(summary = "Search an order by the order status", description = "Search an order by it current status")
+    @GetMapping("/searchByStatus")
+    public List<OrderResponseDto> search(OrderSearchParameters searchParameters,
+                                         Pageable pageable) {
+        return orderService.searchByStatus(searchParameters, pageable);
+    }
 
     //    @GetMapping("/{orderId}/items/{orderItemId}")
     //    @PreAuthorize("hasRole('ROLE_ADMIN')")

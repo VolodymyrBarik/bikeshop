@@ -16,6 +16,6 @@ public class StatusSpecificationProvider implements SpecificationProvider<Order>
 
     public Specification<Order> getSpecification(Long[] params) {
         return (root, query, criteriaBuilder) ->
-                root.get("status").get("id").in(Arrays.stream(params).toArray());
+                root.get("currentStatus").get("id").in(Arrays.stream(params).toArray());
     }
 }

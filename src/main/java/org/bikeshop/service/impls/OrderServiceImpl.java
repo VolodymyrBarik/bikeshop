@@ -1,6 +1,7 @@
 package org.bikeshop.service.impls;
 
 import lombok.RequiredArgsConstructor;
+import org.bikeshop.dto.OrderSearchParameters;
 import org.bikeshop.dto.request.OrderItemRequestDto;
 import org.bikeshop.dto.request.OrderRequestDto;
 import org.bikeshop.dto.request.UpdateOrderRequestDto;
@@ -15,6 +16,7 @@ import org.bikeshop.mapper.OrderMapper;
 import org.bikeshop.model.*;
 import org.bikeshop.repository.*;
 import org.bikeshop.repository.order.OrderRepository;
+import org.bikeshop.repository.order.OrderSpecificationBuilder;
 import org.bikeshop.repository.product.ProductRepository;
 import org.bikeshop.service.OrderService;
 import org.bikeshop.service.OrderStatusHistoryService;
@@ -22,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -43,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderStatusHistoryService orderStatusHistoryService;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
     private final UserRepository userRepository;
+    private final OrderSpecificationBuilder orderSpecificationBuilder;
 
     @Override
     public OrderResponseDto create(User user, OrderRequestDto dto) {
@@ -115,6 +119,16 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<OrderResponseDto> searchByStatus(OrderSearchParameters searchParameters, Pageable pageable) {
+        Specification<Order> orderSpecification =
+                orderSpecificationBuilder.build(searchParameters);
+        return orderRepository.findAll(orderSpecification)
+                .stream()
+                .map(orderMapper::toDto)
+                .toList();
     }
 
     @Override

@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } else if (tokenBlacklistService.isTokenBlacklisted(token)) {
+        } else if (token != null && tokenBlacklistService.isTokenBlacklisted(token)) {
             // Якщо токен у чорному списку, блокувати запит і відповісти 401
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
