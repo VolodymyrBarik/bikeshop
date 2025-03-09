@@ -22,4 +22,11 @@ public interface OrderRepository extends JpaRepository<Order, Long>,
             "LEFT JOIN FETCH o.user " +
             "WHERE oi.order.id = :id")
     Optional<Order> findById(@NonNull Long id);
+
+    @NonNull
+    @Query("SELECT o FROM Order o " +
+            "LEFT JOIN FETCH o.user " +
+            "LEFT JOIN FETCH o.orderStatusHistoryList " +
+            "WHERE o.id = :id")
+    Optional<Order> findByIdWithOrderStatusHistoryList(@NonNull Long id);
 }

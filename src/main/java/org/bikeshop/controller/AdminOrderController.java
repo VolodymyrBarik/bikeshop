@@ -58,7 +58,7 @@ public class AdminOrderController {
     }
 
     @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
-    @PutMapping("/{orderId}")
+    @PutMapping("/{orderId}/status")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update order status", description = "Updates order status by admin")
     void updateStatus(@PathVariable Long orderId, @RequestBody Long statusId) {

@@ -55,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
                         "You're shopping cart is empty, "
                                 + "you have to place good's into the shopping cart"));
         Order orderFromDb = setUpOrder(user, dto, shoppingCart);
+        Status statusNew = statusRepository.findById(NEW_ORDER_STATUS)
+                .orElseThrow(() -> new EntityNotFoundException("There is no status with id " + NEW_ORDER_STATUS));
+        orderStatusHistoryService.create(orderFromDb, statusNew);
         clearUserShoppingCart(user);
         return getOrderConfirmation(orderFromDb, user);
     }
@@ -96,11 +99,12 @@ public class OrderServiceImpl implements OrderService {
     public void updateStatus(Long orderId, Long statusId) {
         Status statusFromDb = statusRepository.findById(statusId).orElseThrow(() -> new NoSuchElementException(
                 "Can't find status with id " + statusId + " in order " + orderId));
-        Order order = orderRepository.findById(orderId).orElseThrow(
+        Order order = orderRepository.findByIdWithOrderStatusHistoryList(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find order number # " + orderId));
         order.setCurrentStatus(statusFromDb);
-        OrderStatusHistoryResponseDto orderStatusHistoryResponseDto = orderStatusHistoryService.create(order, statusFromDb);
-        updateOrderStatusHistoryList(orderId, orderStatusHistoryResponseDto.getId());
+        OrderStatusHistoryResponseDto orderStatusHistoryResponseDto =
+                orderStatusHistoryService.create(order, statusFromDb);
+        updateOrderStatusHistoryList(order.getId(), orderStatusHistoryResponseDto.getId());
         orderRepository.save(order);
     }
 
